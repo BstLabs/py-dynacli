@@ -172,7 +172,7 @@ def _get_kwargs_arg_props(
     _, choices = _process_type(param_type)
     nargs = _calc_n_kwargs(args) if nargs == "*" else "*"
 
-    def _process_value(value: str):
+    def _process_value(value: str) -> tuple[str, type]:
         name, _, val = value.partition("=")
         return name, param_type(val)
 
@@ -220,7 +220,9 @@ _PARAM_KIND_MAP: Final[dict[str, callable]] = {
 }
 
 
-def _make_arg_help(arg_name: str, param_docs: dict[str, str], choices: ChoicesType):
+def _make_arg_help(
+    arg_name: str, param_docs: Optional[dict[str, str]], choices: ChoicesType
+):
     arg_help = (
         param_docs.get(
             arg_name,
@@ -307,7 +309,7 @@ def _add_param_doc(param_docs: dict[str, str], match: Match[AnyStr]) -> None:
     """
     param_name = match[1].lstrip("*")
     param_doc = match[2]
-    param_docs[param_name] = param_doc
+    param_docs[str(param_name)] = str(param_doc)
 
 
 def _add_version(parser: ArgumentParser, module: ModuleType) -> None:
@@ -355,8 +357,8 @@ def _get_root_description() -> tuple[Optional[str], ModuleType]:
 class _ArgParsingContext:
     def __init__(
         self,
-        root_packages: list[str],
-        search_path: Optional[list[str]],
+        root_packages: Optional[list[str]],
+        search_path: list[str],
         args: list[str],
     ) -> None:
         self._root_packages = (
@@ -366,8 +368,8 @@ class _ArgParsingContext:
         )
         self._search_path = [p if p.endswith("/") else p + "/" for p in search_path]
         self._args = args
-        self._root_parser = None  # type: ignore
-        self._current_subparsers = None  # type: ignore
+        self._root_parser: ArgumentParser = None  # type: ignore
+        self._current_subparsers: ArgumentParser._Subparsers = []  # type: ignore
         self._current_command = None
 
     def set_root_parser(self, arg: str) -> None:
@@ -427,7 +429,7 @@ class _ArgParsingContext:
 
     def add_feature(self, name: str, module: ModuleType) -> None:
         self.add_feature_parser(_get_cli_name(name), module)
-        f_name = module.__file__
+        f_name = module.__file__ or ""
         self._search_path = [p for p in self._search_path if f_name.startswith(p)]
 
     def add_command_parser(self, name: str, module: ModuleType) -> None:
@@ -510,7 +512,7 @@ class _ArgParsingContext:
 # from the cli script name to command via intermediate features
 
 _ArgParsingState = Optional[
-    Callable[[Iterator[str], _ArgParsingContext], Type["_ArgParsingState"]]
+    Callable[[Iterator[str], _ArgParsingContext], Optional[Type["_ArgParsingState"]]]
 ]
 
 
@@ -545,7 +547,9 @@ def _waiting_for_feature_module_all_(module: ModuleType) -> _ArgParsingState:
 
 
 def _waiting_for_feature_package_all_(module: ModuleType) -> _ArgParsingState:
-    def _check_feature_all_(iter_: Iterator[str], context: _ArgParsingContext) -> None:
+    def _check_feature_all_(
+        iter_: Iterator[str], context: _ArgParsingContext
+    ) -> Optional[_ArgParsingState]:
         try:
             name = _get_python_name(iter_)
             module_ = context.import_module(name)
@@ -572,7 +576,7 @@ def _waiting_for_all_(
 
 def _waiting_for_feature_or_command(
     iter_: Iterator[str], context: _ArgParsingContext
-) -> _ArgParsingState:
+) -> Optional[_ArgParsingState]:
     try:
         name = _get_python_name(iter_)
         module = context.import_module(name)
@@ -584,7 +588,7 @@ def _waiting_for_feature_or_command(
 
 def _choose_state(
     context: _ArgParsingContext, module: ModuleType, name: str
-) -> _ArgParsingState:
+) -> Optional[_ArgParsingState]:
     try:
         if "__all__" in module.__dict__:
             return _waiting_for_all_(name, module, context)
