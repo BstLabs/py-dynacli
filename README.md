@@ -1,14 +1,14 @@
 # DynaCLI
 
-DynaCLI is a cloud-friendly Python library for converting pure Python functions into Linux Shell commands. 
+DynaCLI is a cloud-friendly Python library for converting pure Python functions into Linux Shell commands.
 
 Unlike other existing solutions such as [Click](https://click.palletsprojects.com/en/8.0.x/) and [Typer](https://typer.tiangolo.com/), there is no need in any function decorators. Even more, unlike all existing solutions, including those built on the top of standard [argparse](https://docs.python.org/3/library/argparse.html) DynaCLI does not build all command parsers upfront, but rather builds one command parser dynamically based on the command line inputs. When combined with [Python Cloud Importer](https://asher-sterkin.medium.com/serverless-cloud-import-system-760d3c4a60b9) solution that makes DynaCLI truly _Open_ with regard to potentially unlimited set of commands, all coming directly from cloud storage. That, in turn eliminates any need for periodic updates on the client stations.
 
 DynaCLI was developed by BST LABS as an Open Source generic infrastructure foundation for the cloud version of Python run-time within the scope of the [Cloud AI Operating System (CAIOS)](https://medium.com/@CAIOStech/improve-devsecops-10x-by-embracing-caios-c0ace31a3f33) project.
 
-For details about the DynaCLI rationale and design considerations, refer to [TBD]().
+For details about the DynaCLI rationale and design considerations, refer to [DynaCLI Github Pages](https://bstlabs.github.io/py-dynacli/).
 
-# Installation
+## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install DynaCLI from the PyPi site:
 
@@ -16,7 +16,8 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install DynaCLI
 pip3 install dynacli
 ```
 
-# Usage
+## Usage
+
 ## Define command line interpreter entry point
 
 ```python
@@ -70,13 +71,13 @@ Just type your command line interpreter entry point script followed by command n
 
 Go to [tutorials/greetings](tutorials/greetings) folder and try it yourself.
 
-# Read the full documentation
+## Read the full documentation
 
-[Here is the link]()
+[DynaCLI Github Pages](https://bstlabs.github.io/py-dynacli/)
 
 ## Project layout
 
-```bash 
+```bash
     py-dynacli/
     ├── docs                # (1) 
     │   └── tutorial
@@ -107,6 +108,6 @@ Go to [tutorials/greetings](tutorials/greetings) folder and try it yourself.
 4. The main source folder
 5. Here we have tests
 
-# License
+## License
 
 MIT License, Copyright (c) 2021-2022 BST LABS. See [LICENSE](LICENSE.md) file.

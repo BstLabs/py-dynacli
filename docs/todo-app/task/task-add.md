@@ -172,4 +172,3 @@ If you check the `daily.json`: `{"daily": [["Todo", "morning walk"], ["Todo", "n
 If you have already noticed every task is by default marked as `"Todo"`.
 
 The next topic is to add `todo task list` command.
-

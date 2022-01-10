@@ -54,7 +54,7 @@ optional arguments:
   -h, --help            show this help message and exit
 ```
 
-# Feature commands
+## Feature commands
 
 What kind of operations we want for our service feature? 
 Let's imagine that we can create, update and shutdown the services.
@@ -66,7 +66,7 @@ $ touch storage_X/cli/dev/service/update.py
 $ touch storage_X/cli/dev/service/shutdown.py
 ```
 
-We consider commands in the package as feature if they have identical named function in it. 
+We consider commands in the package as feature if they have identical named function in it.
 In other words, there should be `#!py new()` function in `new.py`, `#!py update()` in `update.py` etc.
 
 So, let's define our functions(feature commands):
@@ -160,7 +160,7 @@ Updating... myservice to 2.0 with upgrade=True using ('lib1', 'lib2') and {'vers
 
 As you have already noticed we have converted the CLI commands to the function arguments with proper type conversion.
 
-# Versioning your features and commands
+## Versioning your features and commands
 
 Now imagine the case, when for some reason you have a bunch of features with different versions and also your commands have different versioning.
 You can easily handle it, by adding `__version__` in the feature and commands.
@@ -196,7 +196,7 @@ $ ./awesome service update --version
 awesome service update - v2.0
 ```
 
-# Limiting the feature commands
+## Limiting the feature commands
 
 You may have a situation, when you have other helper modules inside the feature package, and you do not want to expose them as a feature command.
 In that case you can leverage the `__all__` mechanism. Originally in Python `__all__` only limits the imports such as: `from something import *`.

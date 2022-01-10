@@ -67,7 +67,7 @@ $ ./awesome destroy please
 This is a top level destroyer - please
 ```
 
-# Versioning
+## Versioning
 
 You can add a unique version to your top level command by adding `__version__`:
 

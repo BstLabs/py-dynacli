@@ -37,7 +37,7 @@ optional arguments:
 2. Module as feature from storage_X
 3. Package as feature from storage_Y
 
-# Feature Commands
+## Feature Commands
 
 With package as feature the commands are modules with identical named functions in it.
 In contrast, here we are going to add multiple functions in the `upload.py` - effectively multiple commands.
@@ -111,7 +111,7 @@ optional arguments:
 
 Finally, let's run this new command:
 
-```console 
+```console
 $ ./awesome upload new -h
 usage: awesome upload new [-h] name
 
@@ -127,7 +127,7 @@ $ ./awesome upload new file
 This is a module as feature file
 ```
 
-# Versioning module as feature
+## Versioning module as feature
 
 As with package as features you can add `__version__` in the module as feature to indicate your unique version:
 
@@ -148,11 +148,11 @@ $ ./awesome upload new --version
 awesome upload new - v5.0
 ```
 
-# Limiting the feature commands
+## Limiting the feature commands
 
 If for some reason you have a "public" function in the module, and you do not want to expose it as a command you can limit it by using `__all__`.
 
-Originally in Python `__all__` only limits the imports such as: from something import *. 
+Originally in Python `__all__` only limits the imports such as: from something import *.
 
 But here we use it just for eliminating the redundant operations when we register the feature commands:
 

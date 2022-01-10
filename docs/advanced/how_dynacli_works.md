@@ -4,4 +4,4 @@ DynaCLI library is a _simple_ preprocessor for the [argparse](https://docs.pytho
 
 The overall structure of DynaCLI library is illustrated below:
 
-[ ![DynaCLI Structure](../img/dynacli_structure.png) ](../img/dynacli_structure.png)
+[![DynaCLI Structure](../img/dynacli_structure.png)](../img/dynacli_structure.png)
