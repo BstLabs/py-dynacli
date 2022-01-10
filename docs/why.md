@@ -6,7 +6,7 @@ Our core differentiator: we do not build all commands upfront but rather form ar
 
 You can have dozens of packages and modules which are going to be converted to CLI without defining CLI commands beforehand.
 
-# TODO: add more words here
+## TODO: add more words here
 
 DynaCLI was written to support the CAIOS ecosystem because no tool could provide it with the functionality it needed.
 

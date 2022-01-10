@@ -77,7 +77,6 @@ class Todoer:
 
 Getting help and running the command:
 
-
 ```console
 $ ./todo task list -h
 usage: todo task list [-h] project_name

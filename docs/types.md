@@ -1,9 +1,8 @@
-## Python types
+# Python types
 
 If you need a refresher about how to use Python type hints, read here [Python Type Checking (Guide)](https://realpython.com/python-type-checking/).
 
-You can also check the <a href="https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html" class="external-link" target="_blank">mypy cheat sheet</a>.
-
+You can also check the [mypy cheat sheet](https://mypy.readthedocs.io/en/latest/cheat_sheet_py3.html).
 In short (very short), you can declare a function with parameters like:
 
 ```Python

@@ -24,7 +24,7 @@ $ tree
 3 directories, 11 files
 ```
 
-Next, we need to add delete functionality to our Todoer controller. 
+Next, we need to add delete functionality to our Todoer controller.
 
 The following code portion is from: [Implement the remove CLI Command](https://realpython.com/python-typer-cli/#implement-the-remove-cli-command)
 

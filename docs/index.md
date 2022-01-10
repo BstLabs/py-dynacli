@@ -2,9 +2,9 @@
 
 ---
 
-**Documentation**: <a href="" target="_blank">Put the link</a>
+**Documentation**: [DynaCLI Github Pages](https://bstlabs.github.io/py-dynacli/)
 
-**Source Code**: <a href="" target="_blank">Put the link</a>
+**Source Code**: [py-dynacli](https://github.com/BstLabs/py-dynacli)
 
 ---
 

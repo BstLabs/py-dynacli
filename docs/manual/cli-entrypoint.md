@@ -1,3 +1,5 @@
+# Building CLI
+
 We are going to build simple CLI app in this tutorial. We called it `awesome`.
 
 First let's define our project structure:

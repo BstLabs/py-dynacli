@@ -26,7 +26,7 @@ Combing these two mechanisms, we come up with a many-to-many types of configurat
 
 Assuming AWS as a cloud platform (it will work equally well for any cloud, we just want to be specific), the diagram below illustrates a typical system configuration of 3 types of storage (System, Group, User) and two types of users (Developer, Administrator) accesses from two AWS cloud accounts:
 
-[ ![Search Paths and Root Packages](../img/dynacli_search_paths_and_root_packages.png) ](../img/dynacli_search_paths_and_root_packages.png)
+[![Search Paths and Root Packages](../img/dynacli_search_paths_and_root_packages.png)](../img/dynacli_search_paths_and_root_packages.png)
 
 Notice, that DynaCLI search path and root package configuration is not limited to cloud storage only (in this example AWS S3). Some artifacts could still be imported from a local disk for boostrap or access time optimization purposes. There is virtually no limit in what could be achieved here.
 
