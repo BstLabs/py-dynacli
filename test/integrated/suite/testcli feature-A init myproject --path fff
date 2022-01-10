@@ -1,0 +1,4 @@
+---
+usage: testcli feature-A init [-h] name
+testcli feature-A init: error: Unsupported argument type typing.Optional[str]
+---

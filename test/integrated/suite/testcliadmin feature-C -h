@@ -1,0 +1,10 @@
+usage: testcliadmin feature-C [-h] {admin,user} ...
+
+positional arguments:
+  {admin,user}
+    admin       get the name of the admin user
+    user        get the name and last name and other information of the user
+
+optional arguments:
+  -h, --help    show this help message and exit
+---

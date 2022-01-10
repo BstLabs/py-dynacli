@@ -1,0 +1,6 @@
+---
+usage: testcli feature-B shape [-h]
+                               environment shapes [args ...] kwargs
+                               <name>=<value>
+testcli feature-B shape: error: argument shapes: invalid choice: 'XXXX' (choose from 'RECTANGLE', 'TRIANGLE', 'CIRCLE')
+---

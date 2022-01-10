@@ -1,0 +1,9 @@
+usage: testclinested feature-A feature-C [-h] {create} ...
+
+positional arguments:
+  {create}
+    create    create the project and its libraries
+
+optional arguments:
+  -h, --help  show this help message and exit
+---

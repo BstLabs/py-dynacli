@@ -1,0 +1,9 @@
+usage: testcli feature-B color [-h] environment colors
+
+positional arguments:
+  environment  environment name (e.g. Cloud9 IDE stack)
+  colors       color choices to accept ['RED', 'GREEN', 'BLUE']
+
+optional arguments:
+  -h, --help   show this help message and exit
+---

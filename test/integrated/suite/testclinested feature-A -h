@@ -1,0 +1,10 @@
+usage: testclinested feature-A [-h] {feature-B,feature-C} ...
+
+positional arguments:
+  {feature-B,feature-C}
+    feature-B           Nested package example
+    feature-C           Wonderful feature C
+
+optional arguments:
+  -h, --help            show this help message and exit
+---

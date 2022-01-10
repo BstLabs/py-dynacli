@@ -1,0 +1,6 @@
+---
+usage: testcli feature-B [-h] [-v]
+                         {destroy,color,shape,unknown-world,distance,terminate,make}
+                         ...
+testcli feature-B: error: invalid choice: 'create' (choose from 'destroy', 'color', 'shape', 'unknown-world', 'distance', 'terminate', 'make')
+---

@@ -1,0 +1,13 @@
+usage: testclinested [-h] [-v] {feature-A,service} ...
+
+Sample DynaCLI Tool for nested package tests
+
+positional arguments:
+  {feature-A,service}
+    feature-A          Top level package
+    service            This is an example of module feature
+
+optional arguments:
+  -h, --help           show this help message and exit
+  -v, --version        show program's version number and exit
+---

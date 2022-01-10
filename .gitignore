@@ -1,0 +1,9 @@
+.idea
+.venv
+build
+dist
+opencli.egg-info
+dynacli.egg-info
+__pycache__/
+*.py[cod]
+.dmypy.json

@@ -1,0 +1,10 @@
+usage: testcli service [-h] {new,shutdown} ...
+
+positional arguments:
+  {new,shutdown}
+    new           Creates a new service
+    shutdown      Shutdown a service
+
+optional arguments:
+  -h, --help      show this help message and exit
+---

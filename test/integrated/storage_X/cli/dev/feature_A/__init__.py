@@ -1,0 +1,3 @@
+"""
+Does something useful
+"""

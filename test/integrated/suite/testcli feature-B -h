@@ -1,0 +1,18 @@
+usage: testcli feature-B [-h] [-v]
+                         {destroy,color,shape,unknown-world,distance,terminate,make}
+                         ...
+
+positional arguments:
+  {destroy,color,shape,unknown-world,distance,terminate,make}
+    destroy             destroy the project and its libraries
+    color               Show me the colors
+    shape               Show me the shapes
+    unknown-world       This is something unknown
+    distance            Show me the distances
+    terminate           Terminator
+    make                make the env if it is a new one
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+---

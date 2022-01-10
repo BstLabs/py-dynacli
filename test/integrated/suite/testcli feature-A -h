@@ -1,0 +1,14 @@
+usage: testcli feature-A [-h] {create,destroy,init,new,package,shutdown} ...
+
+positional arguments:
+  {create,destroy,init,new,package,shutdown}
+    create              create the project and its libraries
+    destroy             destroy the project and its libraries
+    init                init the project in given path
+    new                 Creates a new service skeleton
+    package             package the project and its libraries
+    shutdown            delete the service cloud formation stack
+
+optional arguments:
+  -h, --help            show this help message and exit
+---

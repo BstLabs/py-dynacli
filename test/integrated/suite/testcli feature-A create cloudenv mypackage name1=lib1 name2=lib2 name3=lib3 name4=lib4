@@ -1,0 +1,2 @@
+cloudenv mypackage {'name1': 'lib1', 'name2': 'lib2', 'name3': 'lib3', 'name4': 'lib4'}
+---

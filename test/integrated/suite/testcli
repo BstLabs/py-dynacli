@@ -1,0 +1,4 @@
+usage: testcli [-h] [-v]
+               {destroy,feature-A,service,update,fake,feature-B,the-last,upload}
+               ...
+---

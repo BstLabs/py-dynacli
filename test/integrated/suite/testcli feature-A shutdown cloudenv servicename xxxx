@@ -1,0 +1,4 @@
+---
+usage: testcli [-h] [-v] {feature-A} ...
+testcli: error: unrecognized arguments: xxxx
+---

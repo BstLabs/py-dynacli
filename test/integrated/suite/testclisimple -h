@@ -1,0 +1,15 @@
+usage: testclisimple [-h] [-v] {destroy,feature-A,service,update} ...
+
+Sample DynaCLI Tool without root package
+
+positional arguments:
+  {destroy,feature-A,service,update}
+    destroy             Destroy given name...
+    feature-A           Does something useful
+    service             This is an example of module feature
+    update              Updates everything...
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+---

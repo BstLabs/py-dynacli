@@ -1,0 +1,16 @@
+usage: testcli fake [-h]
+                    {change,remove,drop,detect,lonely,love,unsupported} ...
+
+positional arguments:
+  {change,remove,drop,detect,lonely,love,unsupported}
+    change              change the name
+    remove              remove the name
+    drop                drop the name
+    detect              detect the name
+    lonely              [ERROR] Missing command docstring
+    love                [ERROR] Missing command docstring
+    unsupported         unsupported name
+
+optional arguments:
+  -h, --help            show this help message and exit
+---

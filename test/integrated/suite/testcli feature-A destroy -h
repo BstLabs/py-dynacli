@@ -1,0 +1,13 @@
+usage: testcli feature-A destroy [-h]
+                                 environment project [x ...]
+                                 [y <name>=<value> ...]
+
+positional arguments:
+  environment       environment name (e.g. Cloud9 IDE stack)
+  project           name of the service
+  x                 the variable length list of libraries
+  y <name>=<value>  the keyword length list of libraries
+
+optional arguments:
+  -h, --help        show this help message and exit
+---

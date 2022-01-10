@@ -1,0 +1,9 @@
+usage: testcli fake detect [-h] name
+
+positional arguments:
+  name        [ERROR] Docstring format seems to be incorrect or is completely
+              missing
+
+optional arguments:
+  -h, --help  show this help message and exit
+---

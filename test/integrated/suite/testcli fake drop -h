@@ -1,0 +1,8 @@
+usage: testcli fake drop [-h] name
+
+positional arguments:
+  name        We love to drop
+
+optional arguments:
+  -h, --help  show this help message and exit
+---

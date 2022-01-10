@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+
+"""
+Sample DynaCLI Tool
+"""
+
+import os
+import sys
+
+cwd = os.path.dirname(__file__)
+base, _, _ = cwd.partition('/test')
+sys.path.append(f'{base}/src/python')
+__version__ = "22.2"
+
+from dynacli import main
+
+# Here we define search path - where the packages are stored in the file system
+search_path = [f'{cwd}/storage_X/', f'{cwd}/storage_Y/']
+# Adding root packages to be imported as root for features; please keep in mind that this is not a common case;
+root_packages = ['cli.dev', 'cli.admin']
+sys.path.extend(search_path)
+
+main(search_path, root_packages)

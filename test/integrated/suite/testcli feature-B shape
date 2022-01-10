@@ -1,0 +1,6 @@
+---
+usage: testcli feature-B shape [-h]
+                               environment shapes [args ...]
+                               [kwargs <name>=<value> ...]
+testcli feature-B shape: error: the following arguments are required: environment, shapes, args, kwargs <name>=<value>
+---

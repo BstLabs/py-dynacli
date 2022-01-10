@@ -1,0 +1,4 @@
+---
+usage: testcli feature-A [-h] {create,destroy,init,new,package,shutdown} ...
+testcli feature-A: error: invalid choice: 'yyyy' (choose from 'create', 'destroy', 'init', 'new', 'package', 'shutdown')
+---

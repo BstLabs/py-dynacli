@@ -1,0 +1,4 @@
+---
+usage: testcli feature-B distance [-h] highway
+testcli feature-B distance: error: Unsupported argument type list[int]
+---

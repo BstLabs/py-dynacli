@@ -1,0 +1,17 @@
+usage: testcli feature-B shape [-h]
+                               environment shapes [args ...]
+                               [kwargs <name>=<value> ...]
+
+positional arguments:
+  environment           environment name (e.g. Cloud9 IDE stack)
+  shapes                shape choices to accept ['RECTANGLE', 'TRIANGLE',
+                        'CIRCLE']
+  args                  [ERROR] Missing argument docstring or the name in the
+                        docstring mismatches
+  kwargs <name>=<value>
+                        [ERROR] Missing argument docstring or the name in the
+                        docstring mismatches
+
+optional arguments:
+  -h, --help            show this help message and exit
+---

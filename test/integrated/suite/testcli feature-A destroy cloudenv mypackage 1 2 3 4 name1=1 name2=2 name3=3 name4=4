@@ -1,0 +1,2 @@
+cloudenv mypackage (1, 2, 3, 4) {'name1': 1, 'name2': 2, 'name3': 3, 'name4': 4}
+---

@@ -1,0 +1,10 @@
+usage: testcli upload [-h] [-v] {shutdown} ...
+
+positional arguments:
+  {shutdown}
+    shutdown     Shutdown a service
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -v, --version  show program's version number and exit
+---

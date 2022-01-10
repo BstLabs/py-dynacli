@@ -1,0 +1,8 @@
+usage: testcli feature-A new [-h] name
+
+positional arguments:
+  name        Name of project
+
+optional arguments:
+  -h, --help  show this help message and exit
+---

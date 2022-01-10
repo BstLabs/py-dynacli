@@ -1,0 +1,23 @@
+usage: testcliadmin [-h] [-v]
+                    {destroy,feature-A,service,update,fake,feature-B,the-last,upload,feature-C,feature-D}
+                    ...
+
+Sample DynaCLI Tool
+
+positional arguments:
+  {destroy,feature-A,service,update,fake,feature-B,the-last,upload,feature-C,feature-D}
+    destroy             Destroy given name...
+    feature-A           Does something useful
+    service             This is an example of module feature
+    update              Updates everything...
+    fake                [ERROR] Missing the module docstring
+    feature-B           Does something extremely useful
+    the-last            This is an example of module feature
+    upload              This is an example of module feature
+    feature-C           For admin users
+    feature-D           Do not forget about this feature for admins
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+---

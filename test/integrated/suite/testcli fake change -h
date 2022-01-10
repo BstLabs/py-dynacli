@@ -1,0 +1,9 @@
+usage: testcli fake change [-h] name
+
+positional arguments:
+  name        [ERROR] Missing argument docstring or the name in the docstring
+              mismatches
+
+optional arguments:
+  -h, --help  show this help message and exit
+---

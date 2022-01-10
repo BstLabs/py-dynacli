@@ -1,0 +1,4 @@
+---
+usage: testcli feature-A new [-h] name
+testcli feature-A new: error: the following arguments are required: name
+---
