@@ -433,7 +433,7 @@ class _ArgParsingContext:
         self._search_path = [p for p in self._search_path if f_name.startswith(p)]
 
     def add_command_parser(self, name: str, module: ModuleType) -> None:
-        command = module.__dict__[name]
+        command = module if _is_callable(module) else module.__dict__[name]
         description, spec = _parse_command_doc(command)
         arg_docs = _convert_docstring_to_param_docs(_get_args_from_spec(spec))
         parser = self._build_command_executor(
@@ -579,6 +579,15 @@ def _waiting_for_feature_or_command(
 ) -> Optional[_ArgParsingState]:
     try:
         name = _get_python_name(iter_)
+
+        if (
+            "variable" in _choose_state.__dict__
+            and name in _choose_state.variable.__dict__
+        ):
+            return context.add_command_parser(
+                name, _choose_state.variable.__dict__[name]
+            )
+
         module = context.import_module(name)
         return _choose_state(context, module, name)
     except (StopIteration, ImportError):
@@ -594,6 +603,7 @@ def _choose_state(
             return _waiting_for_all_(name, module, context)
         elif _is_package(module):
             context.add_feature(name, module)
+            _choose_state.variable = module
             return _waiting_for_feature_or_command
         elif _is_feature_module(name, module):
             context.add_feature_parser(name, module)
