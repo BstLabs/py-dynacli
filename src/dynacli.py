@@ -307,9 +307,9 @@ def _add_param_doc(param_docs: dict[str, str], match: Match[AnyStr]) -> None:
     :param param_docs: resulting dictionary
     :param match: outcome of the regular expression matching
     """
-    param_name = match[1].lstrip("*")
-    param_doc = match[2]
-    param_docs[str(param_name)] = str(param_doc)
+    param_name = str(match[1]).lstrip("*")
+    param_doc = str(match[2])
+    param_docs[param_name] = param_doc
 
 
 def _add_version(parser: ArgumentParser, module: ModuleType) -> None:
