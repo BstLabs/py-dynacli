@@ -5,7 +5,7 @@ This is an example of function as command
 
 def new(name: str) -> None:
     """
-    Creates a new service
+    Creates a new service - example of directly importing function
 
     Args:
 

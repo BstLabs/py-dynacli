@@ -583,6 +583,7 @@ def _waiting_for_feature_or_command(
         if (
             "variable" in _choose_state.__dict__
             and name in _choose_state.variable.__dict__
+            and _is_callable(_choose_state.variable.__dict__[name])
         ):
             return context.add_command_parser(
                 name, _choose_state.variable.__dict__[name]
@@ -591,6 +592,10 @@ def _waiting_for_feature_or_command(
         module = context.import_module(name)
         return _choose_state(context, module, name)
     except (StopIteration, ImportError):
+        if "variable" in _choose_state.__dict__:
+            for key, value in _choose_state.variable.__dict__.items():
+                if _is_public(key) and _is_callable(value):
+                    context.add_command_parser(key, value)
         context.build_all_features_help()
         return None
 
