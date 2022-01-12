@@ -13,19 +13,8 @@ from itertools import product
 from os import path
 from pkgutil import iter_modules
 from types import MappingProxyType, ModuleType
-from typing import (
-    Any,
-    AnyStr,
-    Callable,
-    Final,
-    Iterator,
-    Match,
-    Optional,
-    Pattern,
-    Type,
-    TypedDict,
-    Union,
-)
+from typing import (Any, AnyStr, Callable, Final, Iterator, Match, Optional,
+                    Pattern, Type, TypedDict, Union)
 
 # This is for indicating the version of our CLI
 __version__: Final[str] = "1.0"
@@ -531,7 +520,7 @@ def _check_for_callables(module: ModuleType, context: _ArgParsingContext) -> Non
     """This is a helper function that checks if a module has callables defined.
     I.E if the function was imported in __init__.py file.
     We consider this function as callable as a command.
-    
+
     Args:
         module (ModuleType): imported package
         context (_ArgParsingContext): the context object
