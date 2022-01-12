@@ -13,8 +13,19 @@ from itertools import product
 from os import path
 from pkgutil import iter_modules
 from types import MappingProxyType, ModuleType
-from typing import (Any, AnyStr, Callable, Final, Iterator, Match, Optional,
-                    Pattern, Type, TypedDict, Union)
+from typing import (
+    Any,
+    AnyStr,
+    Callable,
+    Final,
+    Iterator,
+    Match,
+    Optional,
+    Pattern,
+    Type,
+    TypedDict,
+    Union,
+)
 
 # This is for indicating the version of our CLI
 __version__: Final[str] = "1.0"
@@ -516,6 +527,20 @@ _ArgParsingState = Optional[
 ]
 
 
+def _check_for_callables(module: ModuleType, context: _ArgParsingContext) -> None:
+    """This is a helper function that checks if a module has callables defined.
+    I.E if the function was imported in __init__.py file.
+    We consider this function as callable as a command.
+    
+    Args:
+        module (ModuleType): imported package
+        context (_ArgParsingContext): the context object
+    """
+    for key, value in module.__dict__.items():
+        if _is_public(key) and _is_callable(value):
+            context.add_command_parser(key, value)
+
+
 def _waiting_for_feature_module_command(module: ModuleType) -> _ArgParsingState:
     def _check_feature_module_command(
         iter_: Iterator[str], context: _ArgParsingContext
@@ -579,23 +604,9 @@ def _waiting_for_feature_or_command(
 ) -> Optional[_ArgParsingState]:
     try:
         name = _get_python_name(iter_)
-
-        if (
-            "variable" in _choose_state.__dict__
-            and name in _choose_state.variable.__dict__
-            and _is_callable(_choose_state.variable.__dict__[name])
-        ):
-            return context.add_command_parser(
-                name, _choose_state.variable.__dict__[name]
-            )
-
         module = context.import_module(name)
         return _choose_state(context, module, name)
     except (StopIteration, ImportError):
-        if "variable" in _choose_state.__dict__:
-            for key, value in _choose_state.variable.__dict__.items():
-                if _is_public(key) and _is_callable(value):
-                    context.add_command_parser(key, value)
         context.build_all_features_help()
         return None
 
@@ -608,7 +619,7 @@ def _choose_state(
             return _waiting_for_all_(name, module, context)
         elif _is_package(module):
             context.add_feature(name, module)
-            _choose_state.variable = module
+            _check_for_callables(module, context)
             return _waiting_for_feature_or_command
         elif _is_feature_module(name, module):
             context.add_feature_parser(name, module)

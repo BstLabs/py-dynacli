@@ -13,7 +13,7 @@ def new(name: str) -> None:
 
     Return: None
     """
-    print(f"This is a module as feature {name}")
+    print(f"This is a callable as a command {name}")
 
 
 def shutdown(name: str, environment: str) -> None:
