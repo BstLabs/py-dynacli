@@ -5,11 +5,11 @@ This is an example of function as command
 
 def new(name: str) -> None:
     """
-    Creates a new service - example of directly importing function
+    Creates a new service - example of directly importing function in __init__.py
 
     Args:
 
-        name (str): Name of project
+        name (str): Name of project (function as command)
 
     Return: None
     """

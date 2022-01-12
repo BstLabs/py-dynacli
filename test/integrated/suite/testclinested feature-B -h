@@ -3,7 +3,7 @@ usage: testclinested feature-B [-h] {new,feature-F} ...
 positional arguments:
   {new,feature-F}
     new            Creates a new service - example of directly importing
-                   function
+                   function in __init__.py
     feature-F      Package where the function as command stored
 
 optional arguments:
