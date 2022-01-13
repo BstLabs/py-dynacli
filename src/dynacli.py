@@ -98,6 +98,10 @@ def _is_callable(command: object) -> bool:
     return isinstance(command, Callable)
 
 
+def _is_package_command(name: str, package: ModuleType) -> bool:
+    return name in package.__dict__ and _is_callable(package.__dict__[name])
+
+
 def _get_module_help(name: str, module: ModuleType) -> str:
     return (
         _get_command_help(name, module)
@@ -381,10 +385,7 @@ class _ArgParsingContext:
         self._current_subparsers = self._root_parser.add_subparsers()
         _add_version(self._root_parser, main_module)
 
-    def get_current_package(self) -> ModuleType:
-        return self._current_package
-
-    def build_all_features_help(self, known_names: list[str] = []) -> None:
+    def build_all_features_help(self, known_names: set[str] = None) -> None:
         """
         Here we are iterating through the search path and registering all features.
         Effectively is equal to: <CLI> -h run
@@ -394,11 +395,11 @@ class _ArgParsingContext:
             self._add_parsers(path_ + root_.replace(".", "/"), known_names)
 
     def build_feature_help(self) -> None:
-        known_names = []
-        for key, value in self._current_package.__dict__.items():
-            if _is_public(key) and _is_callable(value):
-                self.add_command_parser(key, value)
-                known_names.append(key)
+        known_names = set()
+        for name, function in self._current_package.__dict__.items():
+            if _is_public(name) and _is_callable(function):
+                self.add_command_parser(name, function, is_callable=True)
+                known_names.add(name)
 
         self.build_all_features_help(known_names)
 
@@ -446,8 +447,10 @@ class _ArgParsingContext:
         f_name = module.__file__ or ""
         self._search_path = [p for p in self._search_path if f_name.startswith(p)]
 
-    def add_command_parser(self, name: str, module: ModuleType) -> None:
-        command = module if _is_callable(module) else module.__dict__[name]
+    def add_command_parser(
+        self, name: str, module: ModuleType, is_callable: bool = False
+    ) -> None:
+        command = module if is_callable else module.__dict__[name]
         description, spec = _parse_command_doc(command)
         arg_docs = _convert_docstring_to_param_docs(_get_args_from_spec(spec))
         parser = self._build_command_executor(
@@ -480,10 +483,17 @@ class _ArgParsingContext:
                 name_, help=_get_command_description(command=module.__dict__[name_])
             )
 
-    def _add_parsers(self, path_: str, known_names: list[str] = []) -> None:
+    def add_package_command(self, name: str) -> None:
+        curr_package = self._current_package
+        if _is_package_command(name, curr_package):
+            self.add_command_parser(name, curr_package)
+            return None
+
+    def _add_parsers(self, path_: str, known_names: set[str] = None) -> None:
         for module_info in iter_modules([path_]):
             name = module_info.name
-            if _is_public(name) and name not in known_names:
+            _names = known_names or set()
+            if _is_public(name) and name not in _names:
                 self._add_parser(name)
 
     def _add_parser(self, name: str) -> None:
@@ -528,20 +538,6 @@ class _ArgParsingContext:
 _ArgParsingState = Optional[
     Callable[[Iterator[str], _ArgParsingContext], Optional[Type["_ArgParsingState"]]]
 ]
-
-
-def _check_for_callables(module: ModuleType, context: _ArgParsingContext) -> None:
-    """This is a helper function that checks if a module has callables defined.
-    I.E if the function was imported in __init__.py file.
-    We consider this function as callable as a command.
-
-    Args:
-        module (ModuleType): imported package
-        context (_ArgParsingContext): the context object
-    """
-    for key, value in module.__dict__.items():
-        if _is_public(key) and _is_callable(value):
-            context.add_command_parser(key, value)
 
 
 def _waiting_for_feature_module_command(module: ModuleType) -> _ArgParsingState:
@@ -619,10 +615,7 @@ def _waiting_for_nested_feature_or_command(
 ) -> Optional[_ArgParsingState]:
     try:
         name = _get_python_name(iter_)
-        curr_package = context.get_current_package()
-        if name in curr_package.__dict__ and _is_callable(curr_package.__dict__[name]):
-            context.add_command_parser(name, curr_package.__dict__[name])
-            return None
+        context.add_package_command(name)
         module = context.import_module(name)
         return _choose_state(context, module, name)
     except (StopIteration, ImportError):
