@@ -398,7 +398,7 @@ class _ArgParsingContext:
         known_names = set()
         for name, function in self._current_package.__dict__.items():
             if _is_public(name) and _is_callable(function):
-                self.add_command_parser(name, function, is_callable=True)
+                self.add_command_parser(name, self._current_package)
                 known_names.add(name)
 
         self.build_all_features_help(known_names)
@@ -447,10 +447,8 @@ class _ArgParsingContext:
         f_name = module.__file__ or ""
         self._search_path = [p for p in self._search_path if f_name.startswith(p)]
 
-    def add_command_parser(
-        self, name: str, module: ModuleType, is_callable: bool = False
-    ) -> None:
-        command = module if is_callable else module.__dict__[name]
+    def add_command_parser(self, name: str, module: ModuleType) -> None:
+        command = module.__dict__[name]
         description, spec = _parse_command_doc(command)
         arg_docs = _convert_docstring_to_param_docs(_get_args_from_spec(spec))
         parser = self._build_command_executor(
@@ -482,12 +480,6 @@ class _ArgParsingContext:
             self._current_subparsers.add_parser(
                 name_, help=_get_command_description(command=module.__dict__[name_])
             )
-
-    def add_package_command(self, name: str) -> None:
-        curr_package = self._current_package
-        if _is_package_command(name, curr_package):
-            self.add_command_parser(name, curr_package)
-            return None
 
     def _add_parsers(self, path_: str, known_names: set[str] = None) -> None:
         for module_info in iter_modules([path_]):
@@ -615,7 +607,10 @@ def _waiting_for_nested_feature_or_command(
 ) -> Optional[_ArgParsingState]:
     try:
         name = _get_python_name(iter_)
-        context.add_package_command(name)
+        curr_package = context._current_package
+        if _is_package_command(name, curr_package):
+            context.add_command_parser(name, curr_package)
+            return None
         module = context.import_module(name)
         return _choose_state(context, module, name)
     except (StopIteration, ImportError):
