@@ -385,7 +385,7 @@ class _ArgParsingContext:
         self._current_subparsers = self._root_parser.add_subparsers()
         _add_version(self._root_parser, main_module)
 
-    def build_all_features_help(self, known_names: set[str] = None) -> None:
+    def build_all_features_help(self, known_names: Optional[set[str]] = None) -> None:
         """
         Here we are iterating through the search path and registering all features.
         Effectively is equal to: <CLI> -h run
@@ -481,7 +481,7 @@ class _ArgParsingContext:
                 name_, help=_get_command_description(command=module.__dict__[name_])
             )
 
-    def _add_parsers(self, path_: str, known_names: set[str] = None) -> None:
+    def _add_parsers(self, path_: str, known_names: Optional[set[str]] = None) -> None:
         for module_info in iter_modules([path_]):
             name = module_info.name
             _names = known_names or set()
