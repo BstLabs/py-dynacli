@@ -1,0 +1,11 @@
+usage: testclinested feature-B feature-F service [-h] {new,shutdown} ...
+
+positional arguments:
+  {new,shutdown}
+    new           Creates a new service - example of directly importing
+                  function in __init__.py
+    shutdown      Shutdown a service
+
+optional arguments:
+  -h, --help      show this help message and exit
+---
