@@ -22,6 +22,6 @@ DynaCLI key differentiators are:
 
 * **Fast**: DynaCLI builds [argparse](https://docs.python.org/3/library/argparse.html) parser hierarchy only for one command thus eliminating the need for preparing parsers for all available commands.
 * **Open**: adding new command or group of commands (called feature) is as easy as dropping implementation module(s) in right place of import tree.
-* **Frameworkless**: no need to import anything in command modules. Just write plain Python functions with built-in type arguments (*argv and **kwargs are supported as well).
-* **Zero dependencies**: only one module built on the top of standard Python library to install. No heavy dependencies dragged in.
+* **Frameworkless**: no need to import anything in command modules. Just write plain Python functions with built-in type arguments (\*argv and \*\*kwargs are supported as well).
+* **Zero dependencies**: only one module built on top of standard Python library to install. No heavy dependencies dragged in.
 * **Robust**: potential defect in any command will not take down the whole system.  
