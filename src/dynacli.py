@@ -82,6 +82,14 @@ def _is_package(module: ModuleType) -> bool:
     return module.__file__ and module.__file__.endswith("__init__.py")
 
 
+def _is_module_command(name: str, package: ModuleType) -> bool:
+    return (
+        name in package.__dict__
+        and not _is_package(package.__dict__[name])
+        and _is_feature_module(name, package.__dict__[name])
+    )
+
+
 def _is_feature_module(name: str, module: ModuleType) -> bool:
     return name not in module.__dict__
 
@@ -376,6 +384,7 @@ class _ArgParsingContext:
         self._current_subparsers: ArgumentParser._Subparsers = []  # type: ignore
         self._current_package: ModuleType = None  # type: ignore
         self._current_command = None
+        self._known_names: set[str] = set()
 
     def set_root_parser(self, arg: str) -> None:
         description, main_module = _get_root_description()
@@ -385,23 +394,42 @@ class _ArgParsingContext:
         self._current_subparsers = self._root_parser.add_subparsers()
         _add_version(self._root_parser, main_module)
 
-    def build_all_features_help(self, known_names: Optional[set[str]] = None) -> None:
+    def _set_known_names(self):
+        for name, module in self._current_package.__dict__.items():
+            if _is_public(name) and (
+                _is_callable(module) or _is_module_command(name, self._current_package)
+            ):
+                self._known_names.add(name)
+
+    def _add_known_functions(self):
+        for name in self._known_names:
+            module = self._current_package.__dict__[name]
+            if _is_callable(module):
+                self.add_command_parser(name, self._current_package)
+
+    def _add_known_modules(self):
+        for name in self._known_names:
+            module = self._current_package.__dict__[name]
+            if not _is_callable(module) and _is_module_command(
+                name, self._current_package
+            ):
+                self.add_feature_parser(name, module)
+
+    def build_all_features_help(self) -> None:
         """
         Here we are iterating through the search path and registering all features.
         Effectively is equal to: <CLI> -h run
         :return:
         """
         for root_, path_ in product(self._root_packages, self._search_path):
-            self._add_parsers(path_ + root_.replace(".", "/"), known_names)
+            self._add_parsers(path_ + root_.replace(".", "/"))
 
     def build_feature_help(self) -> None:
-        known_names = set()
-        for name, function in self._current_package.__dict__.items():
-            if _is_public(name) and _is_callable(function):
-                self.add_command_parser(name, self._current_package)
-                known_names.add(name)
-
-        self.build_all_features_help(known_names)
+        self._set_known_names()
+        # TODO: I know that this is a bit weird repetitive things. But somehow the order is important here.
+        self.build_all_features_help()
+        self._add_known_functions()
+        self._add_known_modules()
 
     def build_features_help_with_all_(self, module: ModuleType) -> None:
         """
@@ -481,11 +509,10 @@ class _ArgParsingContext:
                 name_, help=_get_command_description(command=module.__dict__[name_])
             )
 
-    def _add_parsers(self, path_: str, known_names: Optional[set[str]] = None) -> None:
+    def _add_parsers(self, path_: str) -> None:
         for module_info in iter_modules([path_]):
             name = module_info.name
-            _names = known_names or set()
-            if _is_public(name) and name not in _names:
+            if _is_public(name) and name not in self._known_names:
                 self._add_parser(name)
 
     def _add_parser(self, name: str) -> None:
@@ -610,7 +637,11 @@ def _waiting_for_nested_feature_or_command(
         curr_package = context._current_package
         if _is_package_command(name, curr_package):
             context.add_command_parser(name, curr_package)
-            return None
+            return
+        if _is_module_command(name, curr_package):
+            module_ = curr_package.__dict__[name]
+            context.add_feature_parser(name, module_)
+            return _waiting_for_feature_module_command(module_)
         module = context.import_module(name)
         return _choose_state(context, module, name)
     except (StopIteration, ImportError):

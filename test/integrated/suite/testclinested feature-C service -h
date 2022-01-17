@@ -1,0 +1,12 @@
+usage: testclinested feature-C service [-h] {new,shutdown} ...
+
+positional arguments:
+  {new,shutdown}
+    new           Creates a new service - example of directly importing module
+                  in __init__.py
+    shutdown      Shutdown a service - example of directly importing module in
+                  __init__.py
+
+optional arguments:
+  -h, --help      show this help message and exit
+---

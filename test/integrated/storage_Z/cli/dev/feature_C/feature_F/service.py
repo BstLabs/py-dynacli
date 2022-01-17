@@ -1,5 +1,5 @@
 """
-This is an example of module as command
+This is an example of module - which is imported in __init__.py
 """
 
 
