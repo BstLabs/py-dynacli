@@ -32,7 +32,7 @@ nav:
       - Package as feature: "manual/package-as-feature.md"
       - Module as feature: "manual/module-as-feature.md"
   - Advanced Reference Manual:
-      - Why DynaCLI?: "why.md"
+      - Why DynaCLI?: "advanced/why.md"
       - Supported types: "advanced/types.md"
       - Docstring formats: "advanced/docstrings.md"
       - Search Path manipulation: "advanced/search-path.md"
