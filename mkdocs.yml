@@ -4,39 +4,39 @@ site_url: ""
 theme:
   name: material
   palette:
-    primary: 'deep blue'
-    accent: 'indigo'
+    primary: "deep blue"
+    accent: "indigo"
   features:
     - content.code.annotate
 
 nav:
-  - DynaCLI: 'index.md'
-  - Why DynaCLI?: 'why.md'
-  - Python Types Intro: 'types.md'
+  - DynaCLI: "index.md"
+  - Python Types Intro: "types.md"
   - Tutorial - TODO app:
-      - TODO - Intro: 'todo-app/index.md'
-      - Init the database: 'todo-app/init.md'
-      - Remove the database: 'todo-app/remove-project.md'
-      - Rename the database: 'todo-app/rename-project.md'
+      - TODO - Intro: "todo-app/index.md"
+      - Init the database: "todo-app/init.md"
+      - Remove the database: "todo-app/remove-project.md"
+      - Rename the database: "todo-app/rename-project.md"
       - Task management:
-        - Setup TODO app database handler: 'todo-app/task/todo-app-database-handler.md'
-        - Setup TODO app todo controller class: 'todo-app/task/todo-controller-class.md'
-        - Add the tasks: 'todo-app/task/task-add.md'
-        - List the tasks: 'todo-app/task/task-list.md'
-        - Delete single task: 'todo-app/task/task-delete.md'
-        - Clear all tasks: 'todo-app/task/task-clear.md'
-        - Set done the task: 'todo-app/task/task-done.md'
+          - Setup TODO app database handler: "todo-app/task/todo-app-database-handler.md"
+          - Setup TODO app todo controller class: "todo-app/task/todo-controller-class.md"
+          - Add the tasks: "todo-app/task/task-add.md"
+          - List the tasks: "todo-app/task/task-list.md"
+          - Delete single task: "todo-app/task/task-delete.md"
+          - Clear all tasks: "todo-app/task/task-clear.md"
+          - Set done the task: "todo-app/task/task-done.md"
   - Reference Manual:
-      - DynaCLI installation: 'manual/index.md'
-      - CLI entrypoint: 'manual/cli-entrypoint.md'
-      - Top level command: 'manual/top-level-command.md'
-      - Package as feature: 'manual/package-as-feature.md'
-      - Module as feature: 'manual/module-as-feature.md'
+      - DynaCLI installation: "manual/index.md"
+      - CLI entrypoint: "manual/cli-entrypoint.md"
+      - Top level command: "manual/top-level-command.md"
+      - Package as feature: "manual/package-as-feature.md"
+      - Module as feature: "manual/module-as-feature.md"
   - Advanced Reference Manual:
-      - Supported types: 'advanced/types.md'
-      - Docstring formats: 'advanced/docstrings.md'
-      - Search Path manipulation: 'advanced/search-path.md'
-      - State Machine: 'advanced/state-machine.md'
+      - Why DynaCLI?: "why.md"
+      - Supported types: "advanced/types.md"
+      - Docstring formats: "advanced/docstrings.md"
+      - Search Path manipulation: "advanced/search-path.md"
+      - State Machine: "advanced/state-machine.md"
 
 markdown_extensions:
   - pymdownx.highlight:

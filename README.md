@@ -6,7 +6,7 @@ Unlike other existing solutions such as [Click](https://click.palletsprojects.co
 
 At its score, DynaCLI is a Python package structure interpreter which makes any public function executable from the command line.
 
-DynaCLI was developed by BST LABS as an open source generic infrastructure foundation for the cloud version of Python run-time within the scope of the [Cloud AI Operating System (CAIOS)](caios.io) project.
+DynaCLI was developed by BST LABS as an open source generic infrastructure foundation for the cloud version of Python run-time within the scope of the [Cloud AI Operating System (CAIOS)](http://caios.io) project.
 
 For details about the DynaCLI rationale and design considerations, refer to [DynaCLI Github Pages](https://bstlabs.github.io/py-dynacli/).
 
