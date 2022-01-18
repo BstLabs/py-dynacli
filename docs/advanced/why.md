@@ -1,4 +1,4 @@
-# DynaCLI in Comparison
+# DynaCLI vs. Alternatives
 
 There are so many libraries out there for writing command line utilities; why choose DynaCLI?
 
