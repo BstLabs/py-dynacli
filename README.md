@@ -2,7 +2,9 @@
 
 DynaCLI (Dynamic CLI) is a cloud-friendly Python library for converting pure Python functions into Linux Shell commands on the fly.
 
-Unlike other existing solutions such as [Click](https://click.palletsprojects.com/en/8.0.x/) and [Typer](https://typer.tiangolo.com/), there is no need for any function decorators. Further, unlike with all existing solutions, including those built on top of standard [argparse](https://docs.python.org/3/library/argparse.html), DynaCLI does not build all command parsers upfront, but rather builds dynamically a single command parser based on the command line inputs. When combined with the [Python Cloud Importer](https://asher-sterkin.medium.com/serverless-cloud-import-system-760d3c4a60b9) solution DynaCLI becomes truly _open_ with regard to a practically unlimited set of commands, all coming directly from cloud storage. This, in turn, eliminates any need for periodic updates on client workstations.
+It's ideal for automating routine development and administrative tasks in a modern cloud software environment because it supports converting a virtually unlimited set of functions into Shell commands with minimal run-time and maintenance overhead.
+
+Unlike other existing solutions such as [Click](https://click.palletsprojects.com/en/8.0.x/) and [Typer](https://typer.tiangolo.com/), there is no need for any function decorators. Further, unlike with all existing solutions, including those built on top of standard [argparse](https://docs.python.org/3/library/argparse.html), DynaCLI does not build all command parsers upfront, but rather builds dynamically a single command parser based on the command line inputs. When combined with the [Python Cloud Importer](https://asher-sterkin.medium.com/serverless-cloud-import-system-760d3c4a60b9) solution, DynaCLI becomes truly _open_ with regard to a practically unlimited set of commands, all coming directly from cloud storage. This, in turn, eliminates any need for periodic updates on client workstations.
 
 At its core, DynaCLI is a Python package structure interpreter which makes any public function executable from the command line.
 
