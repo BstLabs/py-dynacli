@@ -1,0 +1,9 @@
+usage: testclinested feature-D [-h] {new} ...
+
+positional arguments:
+  {new}
+    new       [ERROR] failed to import and get help message
+
+optional arguments:
+  -h, --help  show this help message and exit
+---

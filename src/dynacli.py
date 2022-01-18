@@ -516,9 +516,13 @@ class _ArgParsingContext:
                 self._add_parser(name)
 
     def _add_parser(self, name: str) -> None:
-        module = self.import_module(name)
-        help_ = _get_module_help(name, module)
-        self._current_subparsers.add_parser(_get_cli_name(name), help=help_)
+        try:
+            module = self.import_module(name)
+            help_ = _get_module_help(name, module)
+        except ImportError:
+            help_ = "[ERROR] failed to import and get help message"
+        finally:
+            self._current_subparsers.add_parser(_get_cli_name(name), help=help_)
 
     def _build_command_executor(
         self,
