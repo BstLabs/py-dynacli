@@ -1,31 +1,31 @@
-# Why DynaCLI?
+# DynaCLI in Comparison
 
-There are so many libraries out there for writing command line utilities; why does DynaCLI exist?
+There are so many libraries out there for writing command line utilities; why choose DynaCLI?
 
-Let's take a brief look at most leading Python CLI libraries:
+Let's take a brief look at some common Python CLI libraries:
 
 - [Python argparse](https://docs.python.org/3/library/argparse.html)
 - [Google python-fire](https://google.github.io/python-fire/)
 - [Tiangolo Typer](https://typer.tiangolo.com/)
 - [Pallet's Click](https://click.palletsprojects.com/en/8.0.x/)
 
-Let's review them one by one trying to understand "why not?":
+We'll review them one by one trying to understand "why not this one?"
 
 ## [Python argparse](https://docs.python.org/3/library/argparse.html)
 
-DynaCLI is [built on top](./how_dynacli_works.md) of [argparse](https://docs.python.org/3/library/argparse.html) but latter by itself is not enough: it requires manual constrution of every parser. While provides maimum flexibility, it's also tedious and errorprone. Also, a typical usage of [argparse](https://docs.python.org/3/library/argparse.html) assumes building all parsers and sub-parsers upfront. The irony is that each CLI invocation will execute only one command, soo all other CPU cycles were wasted for nothing. When number of commands is large, it starts to be a serious problem exacerbated by the fact, that in the case of [Cloud AI Operating System (CAIOS)](http://caios.io), all command function modules come from cloud storage. Having said all this, [argparse](https://docs.python.org/3/library/argparse.html) establishes industry-wide standard of how CLI help and usage messages should look like and DynaCLI uses it internally as explained in more details [here](./how_dynacli_works.md).
+DynaCLI is [built on top](./how_dynacli_works.md) of [argparse](https://docs.python.org/3/library/argparse.html) but latter by itself is insufficient: it requires the manual construction of every parser. While this approach provides maximum flexibility, it's also tedious and error-prone. Also, typical usage of [argparse](https://docs.python.org/3/library/argparse.html) assumes building all parsers and sub-parsers upfront. The irony is that each CLI invocation will execute only one command, so all other CPU cycles are wasted. When the number of commands is large, it starts to be a serious problem exacerbated by the fact that, in the case of [Cloud AI Operating System (CAIOS)](http://caios.io), all command function modules come from cloud storage. Having said all this, [argparse](https://docs.python.org/3/library/argparse.html) establishes an industry-wide standard of how CLI help and usage messages should look like, and DynaCLI uses it internally as explained in more details [here](./how_dynacli_works.md).
 
 ## [Google python-fire](https://google.github.io/python-fire/)
 
-This library shares with DynaCLI the main approach of converting ordinary Python functions into Bash commands. It even goes further, and supports class methods. DynaCLI does not support classes at the moment, but we may consider supporting them in the future (there is nothing spectaculary complex about classes). [Google python-fire](https://google.github.io/python-fire/) provides some additional attractive features such as function calls chaining, interactivity, and shell completion. Like DynaCLI, [Google python-fire](https://google.github.io/python-fire/) is built on top of [Python argparse](https://docs.python.org/3/library/argparse.html) and uses its internal machinery for configuring parsers and help and usage messages.
+This library shares with DynaCLI the main approach of converting ordinary Python functions into Bash commands. It even goes further, supporting class methods. DynaCLI does not support classes at the moment, but we may consider supporting them in the future (there is nothing spectacularly complex about classes). [Google python-fire](https://google.github.io/python-fire/) provides some additional attractive features such as function call chaining, interactivity, and shell completion. Like DynaCLI, [Google python-fire](https://google.github.io/python-fire/) is built on top of [Python argparse](https://docs.python.org/3/library/argparse.html) and uses its internal machinery for configuring parsers and help and usage messages.
 
 [Google python-fire](https://google.github.io/python-fire/) also supports custom serialization, keyword arguments (with -- prefix), direct access to object properties and local variables.
 
-[Google python-fire](https://google.github.io/python-fire/) does not rely on type annotations, but rather converts command line arguments to most suitable types automatically on the fly.
+[Google python-fire](https://google.github.io/python-fire/) does not rely on type annotations but rather converts command line arguments to most suitable types automatically on the fly.
 
-However, unlike DynaCLI, [Google python-fire](https://google.github.io/python-fire/) is not _open_ with regard to potential number of commands and command groups (we call them features). Specifically, the main module should ```import fire``` (similar to ```from dynacli import main```), but it also assumes either defining in place or importing ALL functions and classes one wants to convert into Bash commands. DynaCLI does not do this, it relies on seach path and root packages configurations, based on which any number of Python functions will be converted into commands automatically. While DynaCLI does not support classes at the moment (we just did not feel enough need for them), it does support unlimitted nesting of command groups (feature packages) as well as correct interpretation of ```__all__``` specification and packge ```__init__.py``` imports.
+However, unlike DynaCLI, [Google python-fire](https://google.github.io/python-fire/) is not _open_ with regard to the potential number of commands and command groups (we call them features). Specifically, the main module should ```import fire``` (similar to ```from dynacli import main```), but it also assumes either defining in place or importing ALL functions and classes one wants to convert into Bash commands. DynaCLI does not do this; instead it relies on the search path and root packages configurations, based on which any number of Python functions will be converted into commands automatically. While DynaCLI does not support classes at the moment (we simply did not see enough need for them), it does support unlimited nesting of command groups (feature packages) as well as correct interpretation of ```__all__``` specification and packge ```__init__.py``` imports.
 
-As the result, [Google python-fire](https://google.github.io/python-fire/) library is relatively large: 10s of Python modules, while DynaCLI is one Python module with less than 700 lines, including blanks and docstrings. Library size and number of features mean complexity and stability, and we were looking for something as small as possible, we  seldom, if at all, will need to update.
+As the result, the [Google python-fire](https://google.github.io/python-fire/) library is relatively large: i.e., 10s of Python modules. In comparison, DynaCLI comprises one Python module with less than 700 lines, including blanks and docstrings. Library size and number of features mean complexity and stability, and we were looking for something as small as possible... we seldom, if at all, will need to update.
 
 The main difference of DynaCLI from [Google python-fire](https://google.github.io/python-fire/) is that it was built with a another stategic goal in mind: to provide a minimal footprint of completely extensible set of administrative commands coming from vendor and customers alike.
 
