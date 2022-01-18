@@ -1,0 +1,13 @@
+usage: testclinested feature-C [-h] {feature-F,new,service} ...
+
+positional arguments:
+  {feature-F,new,service}
+    feature-F           The awesome feature-F
+    new                 Creates a new service - example of directly importing
+                        module in __init__.py
+    service             This is an example of module - which is imported in
+                        __init__.py
+
+optional arguments:
+  -h, --help            show this help message and exit
+---

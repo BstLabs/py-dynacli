@@ -1,11 +1,12 @@
-usage: testclinested [-h] [-v] {feature-A,feature-B,service} ...
+usage: testclinested [-h] [-v] {feature-A,feature-B,feature-C,service} ...
 
 Sample DynaCLI Tool for nested package tests
 
 positional arguments:
-  {feature-A,feature-B,service}
+  {feature-A,feature-B,feature-C,service}
     feature-A           Top level package
     feature-B           Here we are going to show function as command
+    feature-C           Awesome
     service             This is an example of module feature
 
 optional arguments:
