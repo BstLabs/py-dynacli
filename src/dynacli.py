@@ -82,7 +82,7 @@ def _is_package(module: ModuleType) -> bool:
     return module.__file__ and module.__file__.endswith("__init__.py")
 
 
-def _is_module_command(name: str, package: ModuleType) -> bool:
+def _is_module_shortcut(name: str, package: ModuleType) -> bool:
     return (
         name in package.__dict__
         and not _is_package(package.__dict__[name])
@@ -397,7 +397,7 @@ class _ArgParsingContext:
     def _set_known_names(self):
         for name, module in self._current_package.__dict__.items():
             if _is_public(name) and (
-                _is_callable(module) or _is_module_command(name, self._current_package)
+                _is_callable(module) or _is_module_shortcut(name, self._current_package)
             ):
                 self._known_names.add(name)
 
@@ -410,7 +410,7 @@ class _ArgParsingContext:
     def _add_known_modules(self):
         for name in self._known_names:
             module = self._current_package.__dict__[name]
-            if not _is_callable(module) and _is_module_command(
+            if not _is_callable(module) and _is_module_shortcut(
                 name, self._current_package
             ):
                 self.add_feature_parser(name, module)
@@ -426,8 +426,8 @@ class _ArgParsingContext:
 
     def build_feature_help(self) -> None:
         self._set_known_names()
-        # TODO: I know that this is a bit weird repetitive things. But somehow the order is important here.
         self.build_all_features_help()
+        # You may argue about repeated for loops; the issue is that the order of function and module additions to the argparse matters;
         self._add_known_functions()
         self._add_known_modules()
 
@@ -638,7 +638,7 @@ def _waiting_for_nested_feature_or_command(
         if _is_package_command(name, curr_package):
             context.add_command_parser(name, curr_package)
             return
-        if _is_module_command(name, curr_package):
+        if _is_module_shortcut(name, curr_package):
             module_ = curr_package.__dict__[name]
             context.add_feature_parser(name, module_)
             return _waiting_for_feature_module_command(module_)
