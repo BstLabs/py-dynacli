@@ -1,3 +1,3 @@
 """
-Imitating the module import errors
+Imitating the import errors at module level
 """
