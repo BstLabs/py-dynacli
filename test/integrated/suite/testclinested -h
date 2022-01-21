@@ -1,11 +1,11 @@
 usage: testclinested [-h] [-v]
-                     {feature-A,feature-B,feature-C,feature-D,feature-F,service}
+                     {feature-A,feature-B,feature-C,feature-D,feature-F,service,feature-Z}
                      ...
 
 Sample DynaCLI Tool for nested package tests
 
 positional arguments:
-  {feature-A,feature-B,feature-C,feature-D,feature-F,service}
+  {feature-A,feature-B,feature-C,feature-D,feature-F,service,feature-Z}
     feature-A           Top level package
     feature-B           Here we are going to use function shortcut directly
                         importing it in __init__.py
@@ -14,6 +14,7 @@ positional arguments:
     feature-F           [ERROR] failed to import feature_F - No module named
                         'xxxx'
     service             This is an example of module feature
+    feature-Z           For admin users
 
 optional arguments:
   -h, --help            show this help message and exit
