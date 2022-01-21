@@ -459,7 +459,8 @@ class _ArgParsingContext:
             try:
                 return import_module(package + name)
             except ImportError as err:
-                err_msg = err.msg
+                if package not in err.msg:
+                    err_msg = err.msg
         raise ImportError(f"{name} - {err_msg}")
 
     def add_feature_parser(self, name: str, module: ModuleType) -> None:
