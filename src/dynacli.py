@@ -456,11 +456,15 @@ class _ArgParsingContext:
     def import_module(self, name) -> ModuleType:
         err_msg = None
         for package in self._root_packages:
+            full_name = package + name
             try:
-                return import_module(package + name)
+                return import_module(full_name)
             except ImportError as err:
-                if package not in err.msg:
+                if f"No module named '{full_name}'" != err.msg:
                     err_msg = err.msg
+            except Exception as err:
+                err_msg = str(err)
+
         raise ImportError(f"{name} - {err_msg}")
 
     def add_feature_parser(self, name: str, module: ModuleType) -> None:
