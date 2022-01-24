@@ -1,0 +1,14 @@
+default_language_version:
+  python: python3.9
+
+default_stages: [commit, push]
+
+repos:
+  - repo: local
+    hooks:
+      - id: formatter
+        name: formatter
+        entry: scripts/format-imports.sh
+        language: script
+        types: [python]
+        pass_filenames: false
