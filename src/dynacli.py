@@ -84,9 +84,9 @@ def _is_package(module: ModuleType) -> bool:
 
 def _is_module_shortcut(name: str, package: ModuleType) -> bool:
     return (
-        name in package.__dict__
-        and not _is_package(package.__dict__[name])
-        and _is_feature_module(name, package.__dict__[name])
+            name in package.__dict__
+            and not _is_package(package.__dict__[name])
+            and _is_feature_module(name, package.__dict__[name])
     )
 
 
@@ -166,7 +166,7 @@ def _calc_n_kwargs(args: list[str]) -> Union[str, int]:
 
 
 def _get_kwargs_arg_props(
-    param_type: type, args: list[str], nargs: Union[str, int, None]
+        param_type: type, args: list[str], nargs: Union[str, int, None]
 ) -> ArgProps:
     """
     The function for calculating the nargs of argparse.add_argument();
@@ -198,12 +198,12 @@ def _get_kwargs_arg_props(
 
 
 def _get_regular_arg_props(
-    param_type: type,
-    _1: list[str],
-    _2: Optional[Union[str, int]],
-    nargs: Optional[str],
-    action: str,
-    dest: str,
+        param_type: type,
+        _1: list[str],
+        _2: Optional[Union[str, int]],
+        nargs: Optional[str],
+        action: str,
+        dest: str,
 ) -> ArgProps:
     """
     Function for processing regular arguments(positional and *args)
@@ -233,7 +233,7 @@ _PARAM_KIND_MAP: Final[dict[str, callable]] = {
 
 
 def _make_arg_help(
-    arg_name: str, param_docs: Optional[dict[str, str]], choices: ChoicesType
+        arg_name: str, param_docs: Optional[dict[str, str]], choices: ChoicesType
 ):
     arg_help = (
         param_docs.get(
@@ -256,12 +256,12 @@ def _make_arg_metavar(arg_name: str, arg_dest: str) -> str:
 
 
 def _add_command_arg(
-    parser: ArgumentParser,
-    arg_name: str,
-    param: Parameter,
-    param_docs: Optional[dict[str, str]],
-    args: list[str],
-    nargs: Union[str, int, None],
+        parser: ArgumentParser,
+        arg_name: str,
+        param: Parameter,
+        param_docs: Optional[dict[str, str]],
+        args: list[str],
+        nargs: Union[str, int, None],
 ) -> Union[str, int, None]:
     """
     Here we are converting function arguments from the signature to CLI argument.
@@ -368,10 +368,10 @@ def _get_root_description() -> tuple[Optional[str], ModuleType]:
 
 class _ArgParsingContext:
     def __init__(
-        self,
-        root_packages: Optional[list[str]],
-        search_path: list[str],
-        args: list[str],
+            self,
+            root_packages: Optional[list[str]],
+            search_path: list[str],
+            args: list[str],
     ) -> None:
         self._root_packages = (
             [r if r.endswith(".") else r + "." for r in root_packages]
@@ -397,7 +397,7 @@ class _ArgParsingContext:
     def _set_known_names(self):
         for name, module in self._current_package.__dict__.items():
             if _is_public(name) and (
-                _is_callable(module) or _is_module_shortcut(name, self._current_package)
+                    _is_callable(module) or _is_module_shortcut(name, self._current_package)
             ):
                 self._known_names.add(name)
 
@@ -411,7 +411,7 @@ class _ArgParsingContext:
         for name in self._known_names:
             module = self._current_package.__dict__[name]
             if not _is_callable(module) and _is_module_shortcut(
-                name, self._current_package
+                    name, self._current_package
             ):
                 self.add_feature_parser(name, module)
 
@@ -533,11 +533,11 @@ class _ArgParsingContext:
             self._current_subparsers.add_parser(_get_cli_name(name), help=help_)
 
     def _build_command_executor(
-        self,
-        command: callable,
-        name: str,
-        description: str,
-        param_docs: Optional[dict[str, str]],
+            self,
+            command: callable,
+            name: str,
+            description: str,
+            param_docs: Optional[dict[str, str]],
     ) -> ArgumentParser:
         """
         Here we build complete command executor functionality -
@@ -573,7 +573,7 @@ _ArgParsingState = Optional[
 
 def _waiting_for_feature_module_command(module: ModuleType) -> _ArgParsingState:
     def _check_feature_module_command(
-        iter_: Iterator[str], context: _ArgParsingContext
+            iter_: Iterator[str], context: _ArgParsingContext
     ) -> None:
         try:
             context.add_command_parser(_get_python_name(iter_), module)
@@ -586,7 +586,7 @@ def _waiting_for_feature_module_command(module: ModuleType) -> _ArgParsingState:
 
 def _waiting_for_feature_module_all_(module: ModuleType) -> _ArgParsingState:
     def _check_feature_module_command_all_(
-        iter_: Iterator[str], context: _ArgParsingContext
+            iter_: Iterator[str], context: _ArgParsingContext
     ) -> None:
         try:
             name = _get_python_name(iter_)
@@ -603,7 +603,7 @@ def _waiting_for_feature_module_all_(module: ModuleType) -> _ArgParsingState:
 
 def _waiting_for_feature_package_all_(module: ModuleType) -> _ArgParsingState:
     def _check_feature_all_(
-        iter_: Iterator[str], context: _ArgParsingContext
+            iter_: Iterator[str], context: _ArgParsingContext
     ) -> Optional[_ArgParsingState]:
         try:
             name = _get_python_name(iter_)
@@ -619,7 +619,7 @@ def _waiting_for_feature_package_all_(module: ModuleType) -> _ArgParsingState:
 
 
 def _waiting_for_all_(
-    name: str, module: ModuleType, context: _ArgParsingContext
+        name: str, module: ModuleType, context: _ArgParsingContext
 ) -> _ArgParsingState:
     if _is_package(module):
         context.add_feature(name, module)
@@ -630,7 +630,7 @@ def _waiting_for_all_(
 
 
 def _waiting_for_first_feature_or_command(
-    iter_: Iterator[str], context: _ArgParsingContext
+        iter_: Iterator[str], context: _ArgParsingContext
 ) -> Optional[_ArgParsingState]:
     try:
         name = _get_python_name(iter_)
@@ -642,7 +642,7 @@ def _waiting_for_first_feature_or_command(
 
 
 def _waiting_for_nested_feature_or_command(
-    iter_: Iterator[str], context: _ArgParsingContext
+        iter_: Iterator[str], context: _ArgParsingContext
 ) -> Optional[_ArgParsingState]:
     try:
         name = _get_python_name(iter_)
@@ -662,7 +662,7 @@ def _waiting_for_nested_feature_or_command(
 
 
 def _choose_state(
-    context: _ArgParsingContext, module: ModuleType, name: str
+        context: _ArgParsingContext, module: ModuleType, name: str
 ) -> Optional[_ArgParsingState]:
     try:
         if "__all__" in module.__dict__:
@@ -682,15 +682,15 @@ def _choose_state(
 
 
 def _initial_state(
-    iter_: Iterator[str], context: _ArgParsingContext
+        iter_: Iterator[str], context: _ArgParsingContext
 ) -> _ArgParsingState:
     context.set_root_parser(next(iter_))
     return _waiting_for_first_feature_or_command
 
 
 def main(
-    search_path: list[str],
-    root_packages: Optional[list[str]] = None,
+        search_path: list[str],
+        root_packages: Optional[list[str]] = None,
 ) -> None:
     """
     This is the main entrypoint for the CLI.
