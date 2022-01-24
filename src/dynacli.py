@@ -462,8 +462,10 @@ class _ArgParsingContext:
             except ImportError as err:
                 if f"No module named '{full_name}'" != err.msg:
                     err_msg = err.msg
+                    break
             except Exception as err:
                 err_msg = str(err)
+                break
 
         raise ImportError(f"{name} - {err_msg}")
 
