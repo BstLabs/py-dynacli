@@ -16,7 +16,7 @@ cwd = os.path.dirname(__file__)
 search_path = [cwd]
 # This needs to be done only if your sys.path does not already include it
 # Here, we also include the src/python to enable dynacli import
-sys.path.extend([*search_path, f'{cwd}/../../src/python'])
+sys.path.extend([*search_path, f'{cwd}/../../src'])
 
 from dynacli import main
 main(search_path)
