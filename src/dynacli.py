@@ -518,7 +518,7 @@ class _ArgParsingContext:
             )
 
     def _add_parsers(self, path_: str) -> None:
-        for module_info in iter_modules([path_]):
+        for module_info in iter_modules([path_[:-1]]):
             name = module_info.name
             if _is_public(name) and name not in self._known_names:
                 self._add_parser(name)
