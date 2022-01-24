@@ -16,3 +16,26 @@ requires-python = ">=3.9"
 Documentation = "https://bstlabs.github.io/dynacli"
 Source = "https://github.com/bstlabs/dynacli"
 Home = "https://bstlabs.github.io/dynacli"
+
+[project.optional-dependencies]
+doc = ["mkdocs-material >=8.1.2"]
+dev = [
+    "black >=21.9b0",
+    "pylint >=2.12.2",
+    "isort >=5.9.3",
+    "autoflake >=1.4",
+    "flake8 >=4.0.1",
+    "pre-commit >=2.17.0"
+    ]
+
+[tool.isort]
+profile = "black"
+py_version = 39
+skip = [".gitignore", ".dockerignore"]
+extend_skip = [".md", ".json"]
+skip_glob = ["docs/*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'

@@ -3,6 +3,6 @@
 set -e
 set -x
 
-flake8 src test
-black src test --check
-isort src test --check-only
+flake8 src
+black src test --check --diff
+isort src test --check --diff
