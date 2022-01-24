@@ -1,0 +1,9 @@
+usage: testclinested feature-D [-h] {new} ...
+
+positional arguments:
+  {new}
+    new       [ERROR] failed to import new - No module named 'xxxx'
+
+optional arguments:
+  -h, --help  show this help message and exit
+---

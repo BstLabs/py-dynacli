@@ -454,12 +454,20 @@ class _ArgParsingContext:
         _execute_command(args, self._current_command)
 
     def import_module(self, name) -> ModuleType:
+        err_msg = None
         for package in self._root_packages:
+            full_name = package + name
             try:
-                return import_module(package + name)
-            except ImportError:
-                pass
-        raise ImportError(name)
+                return import_module(full_name)
+            except ImportError as err:
+                if f"No module named '{full_name}'" != err.msg:
+                    err_msg = err.msg
+                    break
+            except Exception as err:
+                err_msg = str(err)
+                break
+
+        raise ImportError(f"{name} - {err_msg}")
 
     def add_feature_parser(self, name: str, module: ModuleType) -> None:
         self._root_packages = [module.__name__ + "."]
@@ -516,9 +524,13 @@ class _ArgParsingContext:
                 self._add_parser(name)
 
     def _add_parser(self, name: str) -> None:
-        module = self.import_module(name)
-        help_ = _get_module_help(name, module)
-        self._current_subparsers.add_parser(_get_cli_name(name), help=help_)
+        try:
+            module = self.import_module(name)
+            help_ = _get_module_help(name, module)
+        except ImportError as err:
+            help_ = "[ERROR] failed to import " + err.msg
+        finally:
+            self._current_subparsers.add_parser(_get_cli_name(name), help=help_)
 
     def _build_command_executor(
         self,

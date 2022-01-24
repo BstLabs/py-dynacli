@@ -8,13 +8,19 @@ import os
 import sys
 
 cwd = os.path.dirname(__file__)
-base, _, _ = cwd.partition('/test')
-sys.path.append(f'{base}/src/python')
+base, _, _ = cwd.partition("/test")
+sys.path.append(f"{base}/src/python")
 __version__ = "02.1"
 
 from dynacli import main
 
-search_path = [f'{cwd}/storage_Z/cli/dev']
+search_path = [f"{cwd}/storage_Z/"]
+
+root_packages = ["cli.dev", "cli.admin"]
+
 sys.path.extend(search_path)
 
-main(search_path)
+main(
+    search_path,
+    root_packages,
+)
