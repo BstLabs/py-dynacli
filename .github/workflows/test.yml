@@ -1,4 +1,4 @@
-name: Lint
+name: Test
 on:
   pull_request:
     branches:
@@ -7,7 +7,7 @@ on:
       - develop
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,8 +15,6 @@ jobs:
         with:
           python-version: 3.9.6
           architecture: x64
-      - run: pip install flake8==4.0.1
-      - run: pip install black==21.9b0
-      - run: pip install isort==5.9.3
-      - run: scripts/lint.sh
-        shell: bash
+      - run: pip install flit==3.6.0
+      - run: flit install
+      - run: cd test/integrated; python3 -m unittest test_dynacli.py
