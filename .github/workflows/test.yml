@@ -15,6 +15,7 @@ jobs:
         with:
           python-version: 3.9
           architecture: x64
+      - name: Run all integrated tests
       - run: pip install flit==3.6.0
       - run: flit install
-      - run: python3 -m unittest test/integrated/test_dynacli.py
+      - run: cd test/integrated; python3 -m unittest test_dynacli.py
