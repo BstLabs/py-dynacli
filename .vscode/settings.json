@@ -11,7 +11,7 @@
     "editor.formatOnSaveMode": "file",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-        "source.organizeImports": true
+        "source.organizeImports": true,
     },
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,

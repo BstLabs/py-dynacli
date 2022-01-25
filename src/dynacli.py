@@ -13,8 +13,19 @@ from itertools import product
 from os import path
 from pkgutil import iter_modules
 from types import MappingProxyType, ModuleType
-from typing import (Any, AnyStr, Callable, Final, Iterator, Match, Optional,
-                    Pattern, Type, TypedDict, Union)
+from typing import (
+    Any,
+    AnyStr,
+    Callable,
+    Final,
+    Iterator,
+    Match,
+    Optional,
+    Pattern,
+    Type,
+    TypedDict,
+    Union,
+)
 
 # This is for indicating the version of our CLI
 __version__: Final[str] = "1.0"
