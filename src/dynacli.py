@@ -2,14 +2,14 @@
 DynaCLI is a cloud-friendly Python library for converting pure
 Python functions into Linux Shell commands.
 """
+import argparse
+import functools
+import importlib
+import inspect
+import itertools
 import os
 import re
 import sys
-import functools
-import itertools
-import argparse
-import importlib
-import inspect
 from enum import Enum, EnumMeta
 from pkgutil import iter_modules
 from types import MappingProxyType, ModuleType
