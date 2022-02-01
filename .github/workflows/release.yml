@@ -16,7 +16,7 @@ jobs:
           python-version: 3.9.6
           architecture: x64
     - run: python -m pip install --upgrade pip
-    - run: pip install flit  >=3.2,<4
+    - run: pip install flit==3.6.0
     - name: Build and publish
       env:
         FLIT_USERNAME: __token__
