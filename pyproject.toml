@@ -13,9 +13,9 @@ requires-python = ">=3.9"
 
 
 [project.urls]
-Documentation = "https://bstlabs.github.io/dynacli"
-Source = "https://github.com/bstlabs/dynacli"
-Home = "https://bstlabs.github.io/dynacli"
+Documentation = "https://bstlabs.github.io/py-dynacli/"
+Source = "https://github.com/bstlabs/py-dynacli"
+Home = "https://bstlabs.github.io/py-dynacli"
 
 [project.optional-dependencies]
 doc = ["mkdocs-material >=8.1.2"]
