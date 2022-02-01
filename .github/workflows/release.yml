@@ -5,8 +5,8 @@ on:
     types: [created]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-20.04
+  deploy-package:
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -20,5 +20,4 @@ jobs:
       env:
         FLIT_USERNAME: __token__
         FLIT_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: |
-        flit publish
+      run: flit publish
