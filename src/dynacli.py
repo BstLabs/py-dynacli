@@ -28,7 +28,7 @@ from typing import (
 )
 
 # This is for indicating the version of our CLI
-__version__: Final[str] = "1.0.1"
+__version__: Final[str] = "1.0.2"
 
 ARG_PATTERN: Final[Pattern[str]] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
 
