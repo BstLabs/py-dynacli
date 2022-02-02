@@ -1,6 +1,5 @@
 """
-DynaCLI is a cloud-friendly Python library for converting pure
-Python functions into Linux Shell commands.
+Convert your Python functions to CLI commands
 """
 import re
 import sys
