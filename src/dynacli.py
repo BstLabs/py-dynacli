@@ -1,5 +1,5 @@
 """
-Convert your Python functions to CLI commands
+Convert your Python functions into CLI commands
 """
 import re
 import sys
