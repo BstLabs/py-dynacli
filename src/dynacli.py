@@ -395,11 +395,13 @@ class _ArgParsingContext:
         self._current_package: ModuleType = None  # type: ignore
         self._current_command = None
         self._known_names: set[str] = set()
+        self._top_level_features = []
 
     def set_root_parser(self, arg: str) -> None:
         description, main_module = _get_root_description()
         self._root_parser = ArgumentParser(
-            prog=path.basename(arg), description=description
+            prog=path.basename(arg),
+            description=description,
         )
         self._current_subparsers = self._root_parser.add_subparsers()
         _add_version(self._root_parser, main_module)
@@ -433,6 +435,9 @@ class _ArgParsingContext:
         """
         for root_, path_ in product(self._root_packages, self._search_path):
             self._add_parsers(path_ + root_.replace(".", "/"))
+
+        for name in sorted(self._top_level_features):
+            self._add_parser(name)
 
     def build_feature_help(self) -> None:
         self._set_known_names()
@@ -531,7 +536,7 @@ class _ArgParsingContext:
         for module_info in iter_modules([path_[:-1]]):
             name = module_info.name
             if _is_public(name) and name not in self._known_names:
-                self._add_parser(name)
+                self._top_level_features.append(name)
 
     def _add_parser(self, name: str) -> None:
         try:

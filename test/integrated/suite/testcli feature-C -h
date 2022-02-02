@@ -1,6 +1,6 @@
 ---
 usage: testcli [-h] [-v]
-               {destroy,feature-A,service,update,fake,feature-B,the-last,upload}
+               {destroy,fake,feature-A,feature-B,service,the-last,update,upload}
                ...
-testcli: error: invalid choice: 'feature-C' (choose from 'destroy', 'feature-A', 'service', 'update', 'fake', 'feature-B', 'the-last', 'upload')
+testcli: error: invalid choice: 'feature-C' (choose from 'destroy', 'fake', 'feature-A', 'feature-B', 'service', 'the-last', 'update', 'upload')
 ---
