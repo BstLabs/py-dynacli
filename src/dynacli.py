@@ -395,7 +395,6 @@ class _ArgParsingContext:
         self._current_package: ModuleType = None  # type: ignore
         self._current_command = None
         self._known_names: set[str] = set()
-        self._top_level_features = []
 
     def set_root_parser(self, arg: str) -> None:
         description, main_module = _get_root_description()
@@ -433,11 +432,13 @@ class _ArgParsingContext:
         Effectively is equal to: <CLI> -h run
         :return:
         """
-        for root_, path_ in product(self._root_packages, self._search_path):
-            self._add_parsers(path_ + root_.replace(".", "/"))
 
-        for name in sorted(self._top_level_features):
-            self._add_parser(name)
+        self._add_parsers(
+            [
+                (path_ + root_.replace(".", "/"))[:-1]
+                for root_, path_ in product(self._root_packages, self._search_path)
+            ]
+        )
 
     def build_feature_help(self) -> None:
         self._set_known_names()
@@ -532,11 +533,11 @@ class _ArgParsingContext:
                 name_, help=_get_command_description(command=module.__dict__[name_])
             )
 
-    def _add_parsers(self, path_: str) -> None:
-        for module_info in iter_modules([path_[:-1]]):
+    def _add_parsers(self, paths_: list[str]) -> None:
+        for module_info in sorted(iter_modules(paths_), key=lambda m: m.name):
             name = module_info.name
             if _is_public(name) and name not in self._known_names:
-                self._top_level_features.append(name)
+                self._add_parser(name)
 
     def _add_parser(self, name: str) -> None:
         try:
