@@ -1,18 +1,18 @@
 usage: testcli [-h] [-v]
-               {destroy,feature-A,service,update,fake,feature-B,the-last,upload}
+               {destroy,fake,feature-A,feature-B,service,the-last,update,upload}
                ...
 
 Sample DynaCLI Tool
 
 positional arguments:
-  {destroy,feature-A,service,update,fake,feature-B,the-last,upload}
+  {destroy,fake,feature-A,feature-B,service,the-last,update,upload}
     destroy             Destroy given name...
-    feature-A           Does something useful
-    service             This is an example of module feature
-    update              Updates everything...
     fake                [ERROR] Missing the module docstring
+    feature-A           Does something useful
     feature-B           Does something extremely useful
+    service             This is an example of module feature
     the-last            This is an example of module feature
+    update              Updates everything...
     upload              This is an example of module feature
 
 optional arguments:

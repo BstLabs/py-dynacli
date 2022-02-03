@@ -27,7 +27,9 @@ from typing import (
 )
 
 # This is for indicating the version of our CLI
-__version__: Final[str] = "1.0.3"
+
+__version__: Final[str] = "1.0.4"
+
 
 ARG_PATTERN: Final[Pattern[str]] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
 
@@ -399,7 +401,8 @@ class _ArgParsingContext:
     def set_root_parser(self, arg: str) -> None:
         description, main_module = _get_root_description()
         self._root_parser = ArgumentParser(
-            prog=path.basename(arg), description=description
+            prog=path.basename(arg),
+            description=description,
         )
         self._current_subparsers = self._root_parser.add_subparsers()
         _add_version(self._root_parser, main_module)
@@ -431,8 +434,13 @@ class _ArgParsingContext:
         Effectively is equal to: <CLI> -h run
         :return:
         """
-        for root_, path_ in product(self._root_packages, self._search_path):
-            self._add_parsers(path_ + root_.replace(".", "/"))
+
+        self._add_parsers(
+            [
+                (path_ + root_.replace(".", "/"))[:-1]
+                for root_, path_ in product(self._root_packages, self._search_path)
+            ]
+        )
 
     def build_feature_help(self) -> None:
         self._set_known_names()
@@ -527,8 +535,8 @@ class _ArgParsingContext:
                 name_, help=_get_command_description(command=module.__dict__[name_])
             )
 
-    def _add_parsers(self, path_: str) -> None:
-        for module_info in iter_modules([path_[:-1]]):
+    def _add_parsers(self, paths_: list[str]) -> None:
+        for module_info in sorted(iter_modules(paths_), key=lambda m: m.name):
             name = module_info.name
             if _is_public(name) and name not in self._known_names:
                 self._add_parser(name)
