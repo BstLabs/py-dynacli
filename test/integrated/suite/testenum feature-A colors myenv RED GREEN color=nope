@@ -1,0 +1,6 @@
+---
+usage: testenum feature-A colors [-h]
+                                 environment [colors ...] new_colors
+                                 <name>=<value>
+testenum feature-A colors: error: argument new_colors <name>=<value>: invalid choice: 'nope' (choose from 'RED', 'GREEN', 'BLUE')
+---
