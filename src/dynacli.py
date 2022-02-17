@@ -62,7 +62,7 @@ def _choices_patch():
         value = value[-1] if isinstance(value, tuple) else value
         if action.choices is not None and value not in action.choices:
             choices = (
-                action.choices[:-1]
+                [choice for choice in action.choices if choice]
                 if isinstance(action.choices, list)
                 else action.choices
             )
