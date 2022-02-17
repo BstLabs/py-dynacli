@@ -15,7 +15,9 @@ __version__: Final[str] = "0.0.0" # Change me to define your own version
 
 from dynacli import main
 
-search_path = [cwd] # Change me if you have different path
+search_path = [cwd] # Change me if you have different path; you can add multiple search pathes
 sys.path.extend(search_path)
+# root_packages = ['cli.dev', 'cli.admin'] # Change me if you have predefined root package name
+# main(search_path, root_packages) # Uncomment if you have root_packages defined
 
 main(search_path)

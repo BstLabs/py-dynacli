@@ -15,6 +15,7 @@ sys.path.extend(search_path)
 from dynacli import main as dynamain
 
 
+# For package distro purposes
 def main():
     dynamain(search_path)
 
