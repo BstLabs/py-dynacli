@@ -7,12 +7,12 @@ DynaCLI bootstrap script
 import os
 import sys
 
+from dynacli import main as dynamain
+
 cwd = os.path.dirname(os.path.realpath(__file__))
 
 search_path = [cwd]
 sys.path.extend(search_path)
-
-from dynacli import main as dynamain
 
 
 # For package distro purposes
