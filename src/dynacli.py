@@ -3,7 +3,7 @@ Convert your Python functions into CLI commands
 """
 import re
 import sys
-from argparse import Action, ArgumentParser
+from argparse import Action, ArgumentError, ArgumentParser
 from enum import Enum, EnumMeta
 from functools import partial
 from importlib import import_module
@@ -49,9 +49,31 @@ class ArgProps(TypedDict):
 
     dest: str
     nargs: Optional[Union[int, str]]
-    choices: ChoicesType
+    choices: Optional[list[str]]
     type: Union[type, callable]
     action: Union[str, callable]
+
+
+def _choices_patch():
+    # This is a monkey patch for showing proper error message for nargs="*" + choices
+    # The main goal to support Enum type support with *args and **kwargs
+    def _check_value(self, action, value):
+        # converted value must be one of the choices (if specified)
+        value = value[-1] if isinstance(value, tuple) else value
+        if action.choices is not None and value not in action.choices:
+            choices = (
+                [choice for choice in action.choices if choice]
+                if isinstance(action.choices, list)
+                else action.choices
+            )
+            args = {
+                "value": value,
+                "choices": ", ".join(map(repr, choices)),
+            }
+            msg = "invalid choice: %(value)r (choose from %(choices)s)"
+            raise ArgumentError(action, msg % args)
+
+    return _check_value
 
 
 def _get_feature_help(module: object) -> str:
@@ -192,17 +214,18 @@ def _get_kwargs_arg_props(
     # If previous nargs is None it means there is no *args at function signature,
     # and we can return "*" for nargs;
     # of the **kwargs. example: def func_(a: int, b: str, **kwargs: str)
-
     _, choices = _process_type(param_type)
     nargs = _calc_n_kwargs(args) if nargs == "*" else "*"
 
-    def _process_value(value: str) -> tuple[str, type]:
+    def _process_value(value: str) -> tuple[str, Union[str, type]]:
         name, _, val = value.partition("=")
-        return name, param_type(val)
+        return (name, val) if choices else (name, param_type(val))
+
+    final_choices = [*choices, []] if choices else None
 
     return ArgProps(
         type=_process_value,
-        choices=choices,
+        choices=final_choices,
         nargs=nargs,
         action=_KwargsAction,
         dest="kwargs",
@@ -228,8 +251,9 @@ def _get_regular_arg_props(
     :return:
     """
     arg_type, choices = _process_type(param_type)
+    final_choices = [*choices, []] if choices else None
     return ArgProps(
-        type=arg_type, choices=choices, nargs=nargs, action=action, dest=dest
+        type=arg_type, choices=final_choices, nargs=nargs, action=action, dest=dest
     )
 
 
@@ -245,7 +269,7 @@ _PARAM_KIND_MAP: Final[dict[str, callable]] = {
 
 
 def _make_arg_help(
-    arg_name: str, param_docs: Optional[dict[str, str]], choices: ChoicesType
+    arg_name: str, param_docs: Optional[dict[str, str]], choices: Optional[list[str]]
 ):
     arg_help = (
         param_docs.get(
@@ -256,7 +280,7 @@ def _make_arg_help(
         else "[ERROR] Docstring format seems to be incorrect or is completely missing"
     )
     if choices:
-        arg_help += f" {list(choices)}"
+        arg_help += f" {choices}"
     return arg_help
 
 
@@ -290,7 +314,12 @@ def _add_command_arg(
     :return:
     """
     arg_props = _PARAM_KIND_MAP[param.kind.name](param.annotation, args, nargs)
-    arg_help = _make_arg_help(arg_name, param_docs, arg_props["choices"])
+    choices = (
+        arg_props["choices"][:-1]
+        if type(arg_props["choices"]) is list
+        else arg_props["choices"]
+    )
+    arg_help = _make_arg_help(arg_name, param_docs, choices)
     arg_metavar = _make_arg_metavar(arg_name, arg_props["dest"])
     parser.add_argument(
         **arg_props,
@@ -386,11 +415,12 @@ class _ArgParsingContext:
         args: list[str],
     ) -> None:
         self._root_packages = (
-            [r if r.endswith(".") else r + "." for r in root_packages]
+            [r if r.endswith(".") else f"{r}." for r in root_packages]
             if root_packages
             else [""]
         )
-        self._search_path = [p if p.endswith("/") else p + "/" for p in search_path]
+
+        self._search_path = [p if p.endswith("/") else f"{p}/" for p in search_path]
         self._args = args
         self._root_parser: ArgumentParser = None  # type: ignore
         self._current_subparsers: ArgumentParser._Subparsers = []  # type: ignore
@@ -400,6 +430,7 @@ class _ArgParsingContext:
 
     def set_root_parser(self, arg: str) -> None:
         description, main_module = _get_root_description()
+        setattr(ArgumentParser, "_check_value", _choices_patch())
         self._root_parser = ArgumentParser(
             prog=path.basename(arg),
             description=description,
@@ -488,7 +519,7 @@ class _ArgParsingContext:
         raise ImportError(f"{name} - {err_msg}")
 
     def add_feature_parser(self, name: str, module: ModuleType) -> None:
-        self._root_packages = [module.__name__ + "."]
+        self._root_packages = [f"{module.__name__}."]
         parser = self._current_subparsers.add_parser(
             _get_cli_name(name), help=_get_feature_help(module)
         )
@@ -546,7 +577,7 @@ class _ArgParsingContext:
             module = self.import_module(name)
             help_ = _get_module_help(name, module)
         except ImportError as err:
-            help_ = "[ERROR] failed to import " + err.msg
+            help_ = f"[ERROR] failed to import {err.msg}"
         finally:
             self._current_subparsers.add_parser(_get_cli_name(name), help=help_)
 

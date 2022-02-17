@@ -1,0 +1,12 @@
+usage: testenum [-h] [-v] {feature-A} ...
+
+Sample DynaCLI Tool
+
+positional arguments:
+  {feature-A}
+    feature-A    Testing *args and **kwargs with Enum type
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -v, --version  show program's version number and exit
+---
