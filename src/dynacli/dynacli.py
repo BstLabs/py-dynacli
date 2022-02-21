@@ -27,7 +27,10 @@ from typing import (
 
 ARG_PATTERN: Final[Pattern[str]] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
 
-ChoicesType = Optional[MappingProxyType[Any, EnumMeta]]
+try:
+    ChoicesType = Optional[MappingProxyType[Any, EnumMeta]]
+except TypeError:  # Python 3.8 failing here for some unknown reason
+    ChoicesType = Optional[MappingProxyType]
 
 
 class _KwargsAction(Action):

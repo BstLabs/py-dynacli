@@ -3,7 +3,6 @@
 """
 Sample DynaCLI Tool without root package
 """
-from __future__ import annotations
 
 import os
 import sys
