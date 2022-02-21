@@ -14,7 +14,6 @@ from typing import (
     AnyStr,
     Callable,
     Dict,
-    Final,
     Iterator,
     List,
     Match,
@@ -26,7 +25,17 @@ from typing import (
     Union,
 )
 
-ARG_PATTERN: Final[Pattern[str]] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
+PY37 = sys.version_info >= (3, 7)
+PY38 = sys.version_info >= (3, 8)
+PY39 = sys.version_info >= (3, 9)
+
+try:
+    from typing import Final
+
+    ARG_PATTERN: Final[Pattern[str]] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
+except ImportError:  # Python 3.7 has no Final
+    ARG_PATTERN: Pattern[str] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
+
 
 try:
     ChoicesType = Optional[MappingProxyType[Any, EnumMeta]]
