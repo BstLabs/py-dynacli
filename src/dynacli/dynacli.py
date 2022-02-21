@@ -24,7 +24,6 @@ from typing import (
     Type,
     TypedDict,
     Union,
-    get_origin,
 )
 
 ARG_PATTERN: Final[Pattern[str]] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
@@ -179,7 +178,7 @@ def _process_type(type_: type) -> Tuple[Union[type, callable], ChoicesType]:
             return str, getattr(type_, "__members__", {})
     except TypeError as err:  # Python quirks with Optional etc.gg
         pass
-    raise ValueError(f"Unsupported argument type origin {get_origin(type_)}")
+    raise ValueError(f"Unsupported argument type {type_}")
 
 
 def _calc_n_kwargs(args: List[str]) -> Union[str, int]:
