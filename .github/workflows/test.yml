@@ -8,13 +8,17 @@ on:
 
 jobs:
   test:
+    name: test py${{ matrix.python-version }} on linux
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.7', '3.8', '3.9']
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.9.6
-          architecture: x64
+          python-version: ${{ matrix.python-version }}
       - run: pip install flit==3.6.0
       - run: flit install
       - run: cd test/integrated; python3 -m unittest test_dynacli.py
