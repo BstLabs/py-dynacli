@@ -7,7 +7,7 @@ Sample DynaCLI Tool for nested package tests
 import os
 import sys
 
-cwd = os.path.dirname(__file__)
+cwd = os.path.dirname(os.path.realpath(__file__))
 base, _, _ = cwd.partition("/test")
 sys.path.append(f"{base}/src/dynacli")
 __version__ = "02.1"
