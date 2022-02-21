@@ -1,6 +1,3 @@
-"""
-Convert your Python functions into CLI commands
-"""
 import re
 import sys
 from argparse import Action, ArgumentError, ArgumentParser
@@ -25,11 +22,6 @@ from typing import (
     TypedDict,
     Union,
 )
-
-# This is for indicating the version of our CLI
-
-__version__: Final[str] = "1.0.4"
-
 
 ARG_PATTERN: Final[Pattern[str]] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
 
@@ -756,4 +748,4 @@ def main(
     context.execute()
 
 
-__all__: Final[list[callable]] = ["main", "__version__"]
+__all__: Final[list[callable]] = ["main"]

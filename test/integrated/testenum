@@ -9,7 +9,7 @@ import sys
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 base, _, _ = cwd.partition("/test")
-sys.path.append(f"{base}/src/python")
+sys.path.append(f"{base}/src/dynacli")
 __version__ = "22.2"
 
 from dynacli import main
