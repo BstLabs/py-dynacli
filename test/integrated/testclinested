@@ -3,6 +3,7 @@
 """
 Sample DynaCLI Tool for nested package tests
 """
+from __future__ import annotations
 
 import os
 import sys
