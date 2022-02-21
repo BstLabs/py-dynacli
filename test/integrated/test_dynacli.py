@@ -38,7 +38,7 @@ class TestDynaCLI(TestCase):
     def test_cli(self) -> None:
         dirname_ = os.path.dirname(__file__)
         self.maxDiff = None
-        skips = skip_.get(PY38) or skip_.get(PY39)
+        skips = skip_[PY38] if PY38 else skip_[PY39]
         for test in os.listdir(f"{dirname_}/suite"):
             file_name, _ = os.path.splitext(test)
             cmd = file_name.split(" ")
