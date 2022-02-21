@@ -10,7 +10,16 @@ from unittest import TestCase
 PY38 = sys.version_info >= (3, 8)
 PY39 = sys.version_info >= (3, 9)
 
-skip_ = {PY38: ["Unsupported argument type typing.Optional[str]"], PY39: []}
+skip_ = {
+    PY38: [
+        "Unsupported argument type typing.Optional[str]",
+        "[kwargs <name>=<value> ...]",
+        "[colors ...]",
+        "[x ...]",
+        "[args ...]",
+    ],
+    PY39: [],
+}
 
 
 def _get_expected(file_path: str) -> Union[Tuple[str, None], Tuple[str, str]]:
@@ -37,7 +46,7 @@ class TestDynaCLI(TestCase):
             stdout, stderr = _get_expected(file_path)
             with self.subTest(cmd=file_name):
                 print("Running ", cmd)
-                if [skip for skip in skips if skip in stderr]:
+                if [skip for skip in skips if skip in stderr or skip in stdout]:
                     continue
                 result = run(cmd, capture_output=True, env=environ, text=True)
                 self.assertEqual(stderr, result.stderr)

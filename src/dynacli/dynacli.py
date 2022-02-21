@@ -176,7 +176,7 @@ def _process_type(type_: type) -> Tuple[Union[type, callable], ChoicesType]:
             return type_, None
         elif issubclass(type_, Enum):
             return str, getattr(type_, "__members__", {})
-    except TypeError as err:  # Python quirks with Optional etc.gg
+    except TypeError:  # Python quirks with Optional etc.gg
         pass
     raise ValueError(f"Unsupported argument type {type_}")
 
