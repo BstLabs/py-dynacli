@@ -1,14 +1,12 @@
-from __future__ import annotations
-
 import os
 import unittest
 from os import environ, path
 from subprocess import run
-from typing import Union
+from typing import Tuple, Union
 from unittest import TestCase
 
 
-def _get_expected(file_path: str) -> Union[tuple[str, None], tuple[str, str]]:
+def _get_expected(file_path: str) -> Union[Tuple[str, None], Tuple[str, str]]:
     with open(file_path, "r") as f:
         outputs = f.read().split("---")
     if len(outputs) < 2:
