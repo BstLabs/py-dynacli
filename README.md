@@ -24,6 +24,47 @@ pip3 install dynacli
 
 ## Define command line interpreter entry point
 
+You can use `dynacli init <CLI name> path=<actual path>` command for bootstrapping the entry point file:
+
+```bash
+$ cd tutorials/greetings
+
+$ dynacli init say .
+Successfully created CLI entrypoint say at /home/ssm-user/OSS/py-dynacli/tutorials/greetings
+```
+
+The created `say` file has some comments to change accordingly:
+
+```python
+#!/usr/bin/env python3
+
+"""
+DynaCLI bootstrap script # Change me
+"""
+
+
+import os
+import sys
+from typing import Final
+
+from dynacli import main
+
+cwd = os.path.dirname(os.path.realpath(__file__))
+
+__version__: Final[str] = "0.0.0" # Change me to define your own version
+
+
+search_path = [cwd] # Change me if you have different path; you can add multiple search pathes
+sys.path.extend(search_path)
+# root_packages = ['cli.dev', 'cli.admin'] # Change me if you have predefined root package name
+# main(search_path, root_packages) # Uncomment if you have root_packages defined
+
+main(search_path)
+
+```
+
+Let's change it:
+
 ```python
 #!/usr/bin/env python3
 """
@@ -32,21 +73,21 @@ Greetings CLI
 
 import sys
 import os
+from typing import Final
+
 from dynacli import main
 
-# Yes you can define your own version here
-__version__ = "1.0"
+cwd = os.path.dirname(os.path.realpath(__file__))
 
-cwd = os.path.dirname(__file__)
-# The list of the paths for searching packages and modules by DynaCLI
-# This is a simplest possible configuration. Look at [TBD]() for complete list
-# of configuration options and typical use cases for each one.
-search_path = [f'{cwd}/<path-to-cli-functions>']
-# This needs to be done only if your sys.path does not already include it 
+__version__: Final[str] = "1.0"
+
+search_path = [cwd]
 sys.path.extend(search_path)
 
 main(search_path)
 ```
+
+That is it, now we have ready to go CLI.
 
 ## Define commands
 
@@ -67,10 +108,48 @@ def hello(*names: str) -> None:
 
 ## Start using CLI
 
-Just type your command line interpreter entry point script followed by command name and arguments, if any. For example:
+Let's get the help message:
 
 ```bash
-./say hello World! 
+$ ./say -h
+usage: say [-h] [-v] {hello} ...
+
+Greetings CLI
+
+positional arguments:
+  {hello}
+    hello        Print Hello <first-name> <last-name> message
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -v, --version  show program's version number and exit
+```
+
+We can get the version as easy as:
+
+```bash
+$ ./say --version
+say - v1.0
+```
+
+Now the help about actual command:
+
+```bash
+$ ./say hello -h
+usage: say hello [-h] [names ...]
+
+positional arguments:
+  names       variable list of names to be included in greeting
+
+optional arguments:
+  -h, --help  show this help message and exit
+```
+
+Finally we can run the actual command(the hello function in fact) as:
+
+```bash
+$ ./say hello Shako Rzayev Asher Sterkin
+Hello, Shako Rzayev Asher Sterkin
 ```
 
 Go to [tutorials/greetings](tutorials/greetings) folder and try it yourself.
@@ -79,38 +158,6 @@ Go to [tutorials/greetings](tutorials/greetings) folder and try it yourself.
 
 [DynaCLI Github Pages](https://bstlabs.github.io/py-dynacli/)
 
-## Project layout
-
-```bash
-    py-dynacli/
-    ├── docs                # (1) 
-    │   └── tutorial
-    ├── scripts             # (2)
-    ├── tutorials           # (3)
-    ├── src                 # (4) 
-    │   └── python
-    └── test                # (5) 
-        └── integrated
-            ├── storage_X
-            │   └── cli
-            │       ├── admin
-            │       │   └── feature_C
-            │       └── dev
-            │           └── feature_A
-            ├── storage_Y
-            │   └── cli
-            │       ├── admin
-            │       │   └── feature_D
-            │       └── dev
-            │           └── feature_B
-            └── suite
-```
-
-1. The documentation files
-2. Helper bash scripts
-3. Tutorials
-4. The main source folder
-5. Here we have tests
 
 ## License
 
