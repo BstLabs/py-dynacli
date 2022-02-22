@@ -29,7 +29,7 @@ You can use `dynacli init <CLI name> path=<actual path>` command for bootstrappi
 ```bash
 $ cd tutorials/greetings
 
-$ dynacli init say .
+$ dynacli init say path=.
 Successfully created CLI entrypoint say at /home/ssm-user/OSS/py-dynacli/tutorials/greetings
 ```
 
