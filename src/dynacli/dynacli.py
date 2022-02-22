@@ -13,11 +13,14 @@ from typing import (
     Any,
     AnyStr,
     Callable,
+    Dict,
     Final,
     Iterator,
+    List,
     Match,
     Optional,
     Pattern,
+    Tuple,
     Type,
     TypedDict,
     Union,
@@ -25,7 +28,11 @@ from typing import (
 
 ARG_PATTERN: Final[Pattern[str]] = re.compile(r"\s*(.+)\s+\(.+\):\s+(.+)$")
 
-ChoicesType = Optional[MappingProxyType[Any, EnumMeta]]
+
+try:
+    ChoicesType = Optional[MappingProxyType[Any, EnumMeta]]
+except TypeError:  # Python 3.8 failing here for some unknown reason
+    ChoicesType = Optional[MappingProxyType]
 
 
 class _KwargsAction(Action):
@@ -41,7 +48,7 @@ class ArgProps(TypedDict):
 
     dest: str
     nargs: Optional[Union[int, str]]
-    choices: Optional[list[str]]
+    choices: Optional[List[str]]
     type: Union[type, callable]
     action: Union[str, callable]
 
@@ -77,7 +84,7 @@ def _get_feature_help(module: object) -> str:
     return module.__doc__ or "[ERROR] Missing the module docstring"
 
 
-def _parse_command_doc(command: callable) -> tuple[str, Optional[str]]:
+def _parse_command_doc(command: callable) -> Tuple[str, Optional[str]]:
     """
     The function for parsing function docstring
     :param command: the actual function object
@@ -144,7 +151,7 @@ def _get_module_help(name: str, module: ModuleType) -> str:
     )
 
 
-def _execute_command(args: dict[str, ...], func_: callable) -> None:
+def _execute_command(args: Dict[str, Any], func_: callable) -> None:
     """
     Here we are running actual function with positional arguments.
     If the function signature has **kwargs we will get keyword arguments
@@ -158,7 +165,7 @@ def _execute_command(args: dict[str, ...], func_: callable) -> None:
     func_(*pos_values_, **kwargs_) if kwargs_ else func_(*pos_values_)
 
 
-def _process_type(type_: type) -> tuple[Union[type, callable], ChoicesType]:
+def _process_type(type_: type) -> Tuple[Union[type, callable], ChoicesType]:
     """
     Function for processing int, str, float, bool and Enum type.
     Currently, we are supporting only these types.
@@ -175,7 +182,7 @@ def _process_type(type_: type) -> tuple[Union[type, callable], ChoicesType]:
     raise ValueError(f"Unsupported argument type {type_}")
 
 
-def _calc_n_kwargs(args: list[str]) -> Union[str, int]:
+def _calc_n_kwargs(args: List[str]) -> Union[str, int]:
     """
     Here we try to calculate the nargs for **kwargs arguments.
     Basically we are starting from the end until not encountering
@@ -192,7 +199,7 @@ def _calc_n_kwargs(args: list[str]) -> Union[str, int]:
 
 
 def _get_kwargs_arg_props(
-    param_type: type, args: list[str], nargs: Union[str, int, None]
+    param_type: type, args: List[str], nargs: Union[str, int, None]
 ) -> ArgProps:
     """
     The function for calculating the nargs of argparse.add_argument();
@@ -209,7 +216,7 @@ def _get_kwargs_arg_props(
     _, choices = _process_type(param_type)
     nargs = _calc_n_kwargs(args) if nargs == "*" else "*"
 
-    def _process_value(value: str) -> tuple[str, Union[str, type]]:
+    def _process_value(value: str) -> Tuple[str, Union[str, type]]:
         name, _, val = value.partition("=")
         return (name, val) if choices else (name, param_type(val))
 
@@ -226,7 +233,7 @@ def _get_kwargs_arg_props(
 
 def _get_regular_arg_props(
     param_type: type,
-    _1: list[str],
+    _1: List[str],
     _2: Optional[Union[str, int]],
     nargs: Optional[str],
     action: str,
@@ -249,7 +256,7 @@ def _get_regular_arg_props(
     )
 
 
-_PARAM_KIND_MAP: Final[dict[str, callable]] = {
+_PARAM_KIND_MAP: Final[Dict[str, callable]] = {
     "VAR_POSITIONAL": partial(
         _get_regular_arg_props, nargs="*", action="extend", dest="pos_args"
     ),
@@ -261,7 +268,7 @@ _PARAM_KIND_MAP: Final[dict[str, callable]] = {
 
 
 def _make_arg_help(
-    arg_name: str, param_docs: Optional[dict[str, str]], choices: Optional[list[str]]
+    arg_name: str, param_docs: Optional[Dict[str, str]], choices: Optional[List[str]]
 ):
     arg_help = (
         param_docs.get(
@@ -287,8 +294,8 @@ def _add_command_arg(
     parser: ArgumentParser,
     arg_name: str,
     param: Parameter,
-    param_docs: Optional[dict[str, str]],
-    args: list[str],
+    param_docs: Optional[Dict[str, str]],
+    args: List[str],
     nargs: Union[str, int, None],
 ) -> Union[str, int, None]:
     """
@@ -321,19 +328,19 @@ def _add_command_arg(
     return arg_props["nargs"]
 
 
-def _convert_docstring_to_param_docs(params: Optional[list[str]]) -> dict[str, str]:
+def _convert_docstring_to_param_docs(params: Optional[List[str]]) -> Dict[str, str]:
     """
     Here we are converting the docstring arguments of the function to the dictionary.
     :param params: The list of arguments from the docstring of the function
     :return:
     """
-    param_docs: dict[str, str] = {}
+    param_docs: Dict[str, str] = {}
     if params is not None and [""] != params:
         _build_param_docs(params, param_docs)
     return param_docs
 
 
-def _build_param_docs(params: list[str], param_docs: dict[str, str]) -> None:
+def _build_param_docs(params: List[str], param_docs: Dict[str, str]) -> None:
     """
     Build parameters documentation dictionary
     :param params: list of docstrings from function specification
@@ -346,7 +353,7 @@ def _build_param_docs(params: list[str], param_docs: dict[str, str]) -> None:
         _add_param_doc(param_docs, match_)
 
 
-def _add_param_doc(param_docs: dict[str, str], match: Match[AnyStr]) -> None:
+def _add_param_doc(param_docs: Dict[str, str], match: Match[AnyStr]) -> None:
     """
     Insert one parameter documentation into dictionary
     :param param_docs: resulting dictionary
@@ -371,7 +378,7 @@ def _add_version(parser: ArgumentParser, module: ModuleType) -> None:
         )
 
 
-def _get_args_from_spec(spec: Optional[str]) -> Optional[list[str]]:
+def _get_args_from_spec(spec: Optional[str]) -> Optional[List[str]]:
     if not spec:
         return None
     args_spec, _, _ = spec.partition("Return:")
@@ -386,7 +393,7 @@ def _get_cli_name(name: str) -> str:
     return name.replace("_", "-")
 
 
-def _get_all__(module: ModuleType) -> list[str]:
+def _get_all__(module: ModuleType) -> List[str]:
     return module.__dict__.get("__all__", [])
 
 
@@ -394,7 +401,7 @@ def _get_version(module: ModuleType) -> Optional[str]:
     return module.__dict__.get("__version__")
 
 
-def _get_root_description() -> tuple[Optional[str], ModuleType]:
+def _get_root_description() -> Tuple[Optional[str], ModuleType]:
     main_module = sys.modules["__main__"]
     return main_module.__doc__, main_module
 
@@ -402,9 +409,9 @@ def _get_root_description() -> tuple[Optional[str], ModuleType]:
 class _ArgParsingContext:
     def __init__(
         self,
-        root_packages: Optional[list[str]],
-        search_path: list[str],
-        args: list[str],
+        root_packages: Optional[List[str]],
+        search_path: List[str],
+        args: List[str],
     ) -> None:
         self._root_packages = (
             [r if r.endswith(".") else f"{r}." for r in root_packages]
@@ -558,7 +565,7 @@ class _ArgParsingContext:
                 name_, help=_get_command_description(command=module.__dict__[name_])
             )
 
-    def _add_parsers(self, paths_: list[str]) -> None:
+    def _add_parsers(self, paths_: List[str]) -> None:
         for module_info in sorted(iter_modules(paths_), key=lambda m: m.name):
             name = module_info.name
             if _is_public(name) and name not in self._known_names:
@@ -578,7 +585,7 @@ class _ArgParsingContext:
         command: callable,
         name: str,
         description: str,
-        param_docs: Optional[dict[str, str]],
+        param_docs: Optional[Dict[str, str]],
     ) -> ArgumentParser:
         """
         Here we build complete command executor functionality -
@@ -730,8 +737,8 @@ def _initial_state(
 
 
 def main(
-    search_path: list[str],
-    root_packages: Optional[list[str]] = None,
+    search_path: List[str],
+    root_packages: Optional[List[str]] = None,
 ) -> None:
     """
     This is the main entrypoint for the CLI.
@@ -748,4 +755,4 @@ def main(
     context.execute()
 
 
-__all__: Final[list[callable]] = ["main"]
+__all__: Final[List[callable]] = ["main"]
