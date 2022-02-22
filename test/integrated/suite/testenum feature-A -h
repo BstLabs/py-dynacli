@@ -1,0 +1,11 @@
+usage: testenum feature-A [-h] {color,colors,extra-colors} ...
+
+positional arguments:
+  {color,colors,extra-colors}
+    color               Show me the colors: str, *args: Enum, **kwargs: str
+    colors              Show me the colors: str, *args: Enum, **kwargs: Enum
+    extra-colors        Show me the colors: str, *args: Enum
+
+optional arguments:
+  -h, --help            show this help message and exit
+---

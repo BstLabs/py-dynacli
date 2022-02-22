@@ -8,14 +8,14 @@ import os
 import sys
 
 cwd = os.path.dirname(os.path.realpath(__file__))
-base, _, _ = cwd.partition('/test')
-sys.path.append(f'{base}/src/dynacli')
+base, _, _ = cwd.partition("/test")
+sys.path.append(f"{base}/src/dynacli")
 __version__ = "22.2"
 
 from dynacli import main
 
-search_path = [f'{cwd}/storage_X/', f'{cwd}/storage_Y/']
-root_packages = ['cli.dev']
+search_path = [f"{cwd}/storage_F/"]
+root_packages = ["cli.dev"]
 sys.path.extend(search_path)
 
 main(search_path, root_packages)

@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import List
 
 
 class Distance(Enum):
@@ -6,7 +7,7 @@ class Distance(Enum):
     SHORT = 2
 
 
-def distance(highway: str, turns: list[int], *args: str, **kwargs: int) -> None:
+def distance(highway: str, turns: List[int], *args: str, **kwargs: int) -> None:
     """
     Show me the distances
 
