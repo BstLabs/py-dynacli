@@ -7,6 +7,7 @@ from importlib import import_module
 from inspect import Parameter, signature
 from itertools import product
 from os import path
+from pathlib import Path
 from pkgutil import iter_modules
 from types import MappingProxyType, ModuleType
 from typing import (
@@ -133,6 +134,11 @@ def _is_command(name: str, module: ModuleType) -> bool:
 
 def _is_public(name: str) -> bool:
     return not name.startswith("_")
+
+
+def _is_origin_from_search_path(name: str, search_path: List[str]) -> bool:
+    paths = [path_ + name.replace(".", "/") for path_ in search_path]
+    return any(Path(path_).exists() or Path(f"{path_}.py").exists() for path_ in paths)
 
 
 def _is_from_public_path(name: str) -> bool:
@@ -451,7 +457,11 @@ class _ArgParsingContext:
     def _add_known_functions(self):
         for name in self._known_names:
             module = self._current_package.__dict__[name]
-            if _is_callable(module) and _is_from_public_path(module.__module__):
+            if (
+                _is_callable(module)
+                and _is_from_public_path(module.__module__)
+                and _is_origin_from_search_path(module.__module__, self._search_path)
+            ):
                 self.add_command_parser(name, self._current_package)
 
     def _add_known_modules(self):
@@ -461,6 +471,7 @@ class _ArgParsingContext:
                 not _is_callable(module)
                 and _is_module_shortcut(name, self._current_package)
                 and _is_from_public_path(module.__package__)
+                and _is_origin_from_search_path(module.__package__, self._search_path)
             ):
                 self.add_feature_parser(name, module)
 

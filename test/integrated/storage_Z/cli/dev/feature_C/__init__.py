@@ -2,8 +2,13 @@
 Awesome
 """
 
+# This will be ignored as well as it does not come from the search_path/root_package
+from os.path import join
+from typing import Type
+
 # This imported function should be ignored as it is not from the public path
 from .._common.session import get_session
+from ..feature_A.feature_B.create import create
 from .feature_F import service
 from .feature_F.service import new
 
