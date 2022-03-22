@@ -135,6 +135,14 @@ def _is_public(name: str) -> bool:
     return not name.startswith("_")
 
 
+def _is_origin_from_search_path(name: str, search_path: List[str]) -> bool:
+    return any(name.startswith(path_) for path_ in search_path)
+
+
+def _is_from_public_path(name: str) -> bool:
+    return all(not _name.startswith("_") for _name in name.split("."))
+
+
 def _is_callable(command: object) -> bool:
     return isinstance(command, Callable)
 
@@ -447,14 +455,23 @@ class _ArgParsingContext:
     def _add_known_functions(self):
         for name in self._known_names:
             module = self._current_package.__dict__[name]
-            if _is_callable(module):
+            if (
+                (_is_callable(module) and _is_from_public_path(module.__module__))
+                and hasattr(module, "__code__")
+                and _is_origin_from_search_path(
+                    module.__code__.co_filename, self._search_path
+                )
+            ):
                 self.add_command_parser(name, self._current_package)
 
     def _add_known_modules(self):
         for name in self._known_names:
             module = self._current_package.__dict__[name]
-            if not _is_callable(module) and _is_module_shortcut(
-                name, self._current_package
+            if (
+                not _is_callable(module)
+                and _is_module_shortcut(name, self._current_package)
+                and _is_from_public_path(module.__package__)
+                and _is_origin_from_search_path(module.__file__, self._search_path)
             ):
                 self.add_feature_parser(name, module)
 
