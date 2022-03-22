@@ -1,8 +1,9 @@
-usage: testclinested feature-C [-h] {feature-F,new,service} ...
+usage: testclinested feature-C [-h] {feature-F,create,new,service} ...
 
 positional arguments:
-  {feature-F,new,service}
+  {feature-F,create,new,service}
     feature-F           The awesome feature-F
+    create              create the project and its libraries
     new                 Creates a new service - example of directly importing
                         module in __init__.py
     service             This is an example of module - which is imported in
