@@ -1,7 +1,6 @@
 import os
 import sys
 import unittest
-from contextlib import contextmanager
 from os import environ, path
 from subprocess import run
 from typing import Tuple, Union
@@ -17,8 +16,13 @@ skip_ = {
         "[colors ...]",
         "[x ...]",
         "[args ...]",
+        "usage: testclinested feature-C [-h] {feature-F,create,new,service}",
+        "usage: testclinested feature-C [-h] {feature-F,new,create,service}",
     ],
-    PY39: [],
+    PY39: [
+        "usage: testclinested feature-C [-h] {feature-F,create,new,service}",
+        "usage: testclinested feature-C [-h] {feature-F,new,create,service}",
+    ],
 }
 
 
