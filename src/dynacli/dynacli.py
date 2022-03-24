@@ -226,6 +226,7 @@ def _get_kwargs_arg_props(
 
     def _process_value(value: str) -> Tuple[str, Union[str, type]]:
         name, _, val = value.partition("=")
+        name = name.replace("-", "_")
         return (name, val) if choices else (name, param_type(val))
 
     final_choices = [*choices, []] if choices else None
