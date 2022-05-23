@@ -20,7 +20,7 @@ Home = "https://bstlabs.github.io/py-dynacli"
 [project.optional-dependencies]
 doc = ["mkdocs-material >=8.1.2"]
 dev = [
-    "black >=21.9b0",
+    "black >=22.3.0",
     "pylint >=2.12.2",
     "isort >=5.9.3",
     "autoflake >=1.4",

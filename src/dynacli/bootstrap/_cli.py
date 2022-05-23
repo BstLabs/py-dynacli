@@ -7,7 +7,6 @@ DynaCLI bootstrap script
 import os
 import sys
 
-from dynacli import __version__ as _version
 from dynacli import main as dynamain
 
 cwd = os.path.dirname(os.path.realpath(__file__))
@@ -19,7 +18,7 @@ sys.path.extend(search_path)
 # This fix is for dynacli entrypoint script; as it has wrapper __main__ we need to add necessary information
 
 _map = {
-    "__version__": _version,
+    "__version__": "1.0.8",
     "__doc__": """
 DynaCLI bootstrap script
 """,

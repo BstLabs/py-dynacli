@@ -16,7 +16,7 @@ jobs:
           python-version: 3.9.6
           architecture: x64
       - run: pip install flake8==4.0.1
-      - run: pip install black==21.9b0
+      - run: pip install black==22.3.0
       - run: pip install isort==5.9.3
       - run: scripts/lint.sh
         shell: bash

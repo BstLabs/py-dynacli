@@ -111,8 +111,9 @@ def _get_command_help(name: str, module: object) -> str:
     return _get_command_description(module.__dict__[name])
 
 
-def _is_package(module: ModuleType) -> bool:
-    return module.__file__ and module.__file__.endswith("__init__.py")
+def _is_package(module: ModuleType) -> Optional[bool]:
+    if hasattr(module, "__file__"):
+        return module.__file__.endswith("__init__.py")
 
 
 def _is_module_shortcut(name: str, package: ModuleType) -> bool:
@@ -471,7 +472,10 @@ class _ArgParsingContext:
             if (
                 not _is_callable(module)
                 and _is_module_shortcut(name, self._current_package)
-                and _is_from_public_path(module.__package__)
+                and (
+                    hasattr(module, "__package__")
+                    and _is_from_public_path(module.__package__)
+                )
                 and _is_origin_from_search_path(module.__file__, self._search_path)
             ):
                 self.add_feature_parser(name, module)
