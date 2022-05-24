@@ -1,9 +1,9 @@
 # todo task delete command
 
-We should be able to delete given task from given project.
-Let's implement this command as well. You need to create `delete.py` file:
+We should be able to delete a given task from a given project.
+Let's implement this command as well. You need to create the `delete.py` file:
 
-```bash
+```console
 $ tree
 .
 └── TODO
@@ -26,7 +26,7 @@ $ tree
 
 Next, we need to add delete functionality to our Todoer controller.
 
-The following code portion is from: [Implement the remove CLI Command](https://realpython.com/python-typer-cli/#implement-the-remove-cli-command)
+The following code portion is from [Implement the remove CLI Command](https://realpython.com/python-typer-cli/#implement-the-remove-cli-command)
 
 ```py title="_todos/todo.py"
 

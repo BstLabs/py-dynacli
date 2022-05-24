@@ -3,9 +3,9 @@
 Here we grab [Step 2](https://realpython.com/python-typer-cli/#step-2-set-up-the-to-do-cli-app-with-python-and-typer) and [Step 4](https://realpython.com/python-typer-cli/#step-4-set-up-the-to-do-app-back-end
 ) from the original article and mostly ignored other code portions.
 
-As we have several helper code we can store them in the `_todos` package:
+As we have several helper codes we can store them in the `_todos` package:
 
-```bash
+```console
 $ tree
 .
 └── TODO
@@ -85,9 +85,9 @@ class DatabaseHandler:
 
 Again, we have slightly changed the code but most of it is from [Step 4](https://realpython.com/python-typer-cli/#step-4-set-up-the-to-do-app-back-end).
 
-We added extra package to our CLI path, it should be broken right now? Of course not.
+We added an extra package to our CLI path, it should be broken right now? Of course not.
 
-In pure Python convention the names which are started with `_`(underscore) are considered as "non-public".
+In pure Python convention, the names which are started with `_`(underscore) are considered "non-public".
 DynaCLI follows this convention, and we just **ignore "non-public" packages** - they are not considered as part of CLI.
 
 The next is to add a Controller class for our TODOs.

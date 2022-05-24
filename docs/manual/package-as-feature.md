@@ -1,4 +1,4 @@
-# Package as feature
+# Package as a feature
 
 Now it is time to add our package as features:
 
@@ -18,7 +18,7 @@ $ ./awesome -h
 usage: awesome [-h] {service,environment} ...
 
 positional arguments:
-  {service,environment}
+  {service, environment}
     service             [ERROR] Missing the module docstring
     environment         [ERROR] Missing the module docstring
 
@@ -26,17 +26,21 @@ optional arguments:
   -h, --help            show this help message and exit
 ```
 
-Our packages have no docstrings in it, due to this fact we got an `ERROR` indicating that we are missing the docstrings.
+Our packages have no docstrings in them, due to this fact we got an `ERROR` indicating that we are missing the docstrings.
 
 Let's quickly fix this. We are going to add docstrings to the `__init__.py` files.
 
-Open the `#!python storage_X/cli/dev/service/__init__.py` and add following:
+Open the `storage_X/cli/dev/service/__init__.py` and add the following:
 
-`#!python """The service feature to handle our services"""`
+```py
+"""The service feature to handle our services"""
+```
 
-Open the `#!python storage_Y/cli/dev/environment/__init__.py` and add following:
+Open the `storage_Y/cli/dev/environment/__init__.py` and add the following:
 
-`#!python """The environment feature to handle our environments"""`
+```py
+"""The environment feature to handle our environments"""
+```
 
 Now if you rerun the CLI you can see that there are no `ERROR`s:
 
@@ -46,7 +50,7 @@ $ ./awesome -h
 usage: awesome [-h] {service,environment} ...
 
 positional arguments:
-  {service,environment}
+  {service, environment}
     service             The service feature to handle our services
     environment         The environment feature to handle our environments
 
@@ -56,9 +60,9 @@ optional arguments:
 
 ## Feature commands
 
-What kind of operations we want for our service feature? 
-Let's imagine that we can create, update and shutdown the services.
-That means we need `new.py`, `update.py` and `shutdown.py` files in service package:
+What kind of operations do we want for our service feature? 
+Let's imagine that we can create, update, and shut down the services.
+That means we need `new.py`, `update.py`, and `shutdown.py` files in the service package:
 
 ```console
 $ touch storage_X/cli/dev/service/new.py
@@ -66,7 +70,7 @@ $ touch storage_X/cli/dev/service/update.py
 $ touch storage_X/cli/dev/service/shutdown.py
 ```
 
-We consider commands in the package as feature if they have identical named function in it.
+We consider commands in the package as features if they have an identically named function in them.
 In other words, there should be `#!py new()` function in `new.py`, `#!py update()` in `update.py` etc.
 
 So, let's define our functions(feature commands):
@@ -74,7 +78,7 @@ So, let's define our functions(feature commands):
 ```py title="new.py"
 def new(name: str, path: str):
     """
-    init the new project in given path
+    init the new project in the given path
 
     Args:
         name (str): name of the project
@@ -88,7 +92,7 @@ def new(name: str, path: str):
 ```py title="update.py"
 def update(name: str, version: float, upgrade: bool, *args: str, **kwargs: int) -> None:
     """
-    Updates the service...
+    updates the service...
 
     Args:
         name (str): name of the service
@@ -124,9 +128,9 @@ usage: awesome service [-h] {new,shutdown,update} ...
 
 positional arguments:
   {new,shutdown,update}
-    new                 init the new project in given path
+    new                 init the new project in the given path
     shutdown            shutdown the service
-    update              Updates the service...
+    update              updates the service...
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -162,7 +166,7 @@ As you have already noticed we have converted the CLI commands to the function a
 
 ## Versioning your features and commands
 
-Now imagine the case, when for some reason you have a bunch of features with different versions and also your commands have different versioning.
+Now imagine the case, when for some reason you have a bunch of features with different versions, and also your commands have different versioning.
 You can easily handle it, by adding `__version__` in the feature and commands.
 
 Open the `storage_X/cli/dev/service/__init__.py` and add:
@@ -198,11 +202,11 @@ awesome service update - v2.0
 
 ## Limiting the feature commands
 
-You may have a situation, when you have other helper modules inside the feature package, and you do not want to expose them as a feature command.
-In that case you can leverage the `__all__` mechanism. Originally in Python `__all__` only limits the imports such as: `from something import *`.
+You may have a situation when you have other helper modules inside the feature package, and you do not want to expose them as a feature command.
+In that case, you can leverage the `__all__` mechanism. Originally in Python `__all__` only limits the imports such as: `from something import *`.
 But here we use it just for eliminating the redundant operations when we register the feature commands.
 
-So let's eliminate `shutdown` command from our `service` feature without removing it.
+So let's eliminate the `shutdown` command from our `service` feature without removing it.
 
 Update the `__init__.py` file of the service feature:
 
@@ -242,4 +246,4 @@ usage: awesome service [-h] [-v] {new,update} ...
 awesome service: error: invalid choice: 'shutdown' (choose from 'new', 'update')
 ```
 
-The next is to explore module as features.
+The next is to explore modules as features.

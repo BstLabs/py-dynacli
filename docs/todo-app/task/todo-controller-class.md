@@ -2,11 +2,11 @@
 
 This section is primarily adopted from [Step 4](https://realpython.com/python-typer-cli/#step-4-set-up-the-to-do-app-back-end) and [Step 5](https://realpython.com/python-typer-cli/#step-5-code-the-adding-and-listing-to-dos-functionalities)
 
-Again we have omitted redundant parts and keep only needed code portions.
+Again we have omitted redundant parts and kept only needed code portions.
 
-Let's create `todo.py` file in our `_todos` package:
+Let's create the `todo.py` file in our `_todos` package:
 
-```bash
+```console
 $ tree
 .
 └── TODO
@@ -48,6 +48,6 @@ def get_todoer(project_name: str) -> Todoer:
     return Todoer(project_name)
 ```
 
-We have added `get_todoer` function to get back the Todoer object - it will be used in the actual CLI commands.
+We have added the `get_todoer` function to get back the Todoer object - it will be used in the actual CLI commands.
 
-The next is to implement the task adding CLI command.
+The next is to implement the task-adding CLI command.

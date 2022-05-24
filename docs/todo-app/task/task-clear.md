@@ -4,7 +4,7 @@ How about removing all tasks? I.E clearing the project?
 
 The idea is similar to the [Implement the clear CLI Command](https://realpython.com/python-typer-cli/#implement-the-clear-cli-command)
 
-First, we need to update Todoer controller:
+First, we need to update the Todoer controller:
 
 ```py title="_todos/todo.py"
 ...
@@ -21,7 +21,7 @@ class Todoer:
     ...
 ```
 
-The next thing is to create `clear.py` file in the `task` package:
+The next thing is to create the `clear.py` file in the `task` package:
 
 ```bash
 $ tree
@@ -47,7 +47,7 @@ $ tree
 ```
 
 
-The actual implementation is similar to the original blog post, here we are intentionally using decorator as a prompt:
+The actual implementation is similar to the original blog post, here we are intentionally using a decorator as a prompt:
 
 ```py title="task/clear.py"
 from functools import wraps
@@ -86,7 +86,7 @@ def clear(project_name: str) -> None:
 
 ```
 
-Get the help of the clear command:
+Get the help of the `clear` command:
 
 ```console
 $ ./todo task clear -h
@@ -99,7 +99,7 @@ optional arguments:
   -h, --help    show this help message and exit
 ```
 
-**As you see, the actual code and also the `DynaCLI` implementation did not interfere with `_prompt` decorator.**
+**As you see, the actual code and also the `DynaCLI` implementation did not interfere with the `_prompt` decorator.**
 
 Let's test our clear command:
 

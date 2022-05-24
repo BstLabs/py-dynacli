@@ -1,9 +1,9 @@
 # Module as feature
 
-Module as feature is a standalone module which is not located in the package(I.E it is not a package as feature).
+The module as a feature is a standalone module that is not located in the package(I.E it is not a package as a feature).
 It is a regular `.py` module file with functions in it - but it has no identical named function in it.
 
-Let's add module as feature called `upload.py`:
+Let's add module as a feature called `upload.py`:
 
 ```console
 $ touch storage_X/cli/dev/upload.py
@@ -13,13 +13,13 @@ And add the docstring in the `upload.py` file:
 
 ``` py title="upload.py"
 """
-This is an example of module feature
+This is an example of the module feature
 """
 ```
 
 If you run the CLI:
 
-```bash
+```console
 $ ./awesome -h
 usage: awesome [-h] {service,upload,environment} ...
 
@@ -33,18 +33,18 @@ optional arguments:
   -h, --help            show this help message and exit
 ```
 
-1. Package as feature from storage_X
-2. Module as feature from storage_X
-3. Package as feature from storage_Y
+1. Package as a feature from storage_X
+2. Module as a feature from storage_X
+3. Package as a feature from storage_Y
 
 ## Feature Commands
 
-With package as feature the commands are modules with identical named functions in it.
+With package as a feature, the commands are modules with identically named functions in them.
 In contrast, here we are going to add multiple functions in the `upload.py` - effectively multiple commands.
 
 ```py title="upload.py" hl_lines="32 41"
 """
-This is an example of module feature
+This is an example of the module feature
 """
 
 def new(name: str) -> None:
@@ -62,7 +62,7 @@ def new(name: str) -> None:
 
 def delete(name: str, environment: str) -> None:
     """
-    Deletes a file from given environment
+    Deletes a file from the given environment
 
     Args:
 
@@ -92,7 +92,7 @@ def __revert():
     ...
 ```
 
-**In Python convention something starting with single or double underscore considered as "protected" or "private".**
+**In Python convention something starting with a single and double underscore is considered "protected" and "private" respectively.**
 
 **We like this idea and those commands(functions) are silently ignored and are not considered as commands:**
 
@@ -124,16 +124,16 @@ optional arguments:
 
 ```console
 $ ./awesome upload new file
-This is a module as feature file
+This is a module as a feature file
 ```
 
-## Versioning module as feature
+## Versioning module as a feature
 
-As with package as features you can add `__version__` in the module as feature to indicate your unique version:
+As with packages as features, you can add `__version__` in the module as a feature to indicate your unique version:
 
-``` py title="upload.py" hl_lines="5"
+```py title="upload.py" hl_lines="5"
 """
-This is an example of module feature
+This is an example of the module feature
 """
 
 __version__ = "5.0"
@@ -158,7 +158,7 @@ But here we use it just for eliminating the redundant operations when we registe
 
 ```py title="upload.py" hl_lines="7"
 """
-This is an example of module feature
+This is an example of the module feature
 """
 
 __version__ = "5.0"
@@ -191,4 +191,4 @@ usage: awesome upload [-h] [-v] {new} ...
 awesome upload: error: invalid choice: 'delete' (choose from 'new')
 ```
 
-The next is to learn about top level commands.
+The next is to learn about top-level commands.

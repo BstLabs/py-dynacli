@@ -1,8 +1,8 @@
 # todo task add command
 
-As task management logically is a group of commands it is better to add them in `task` package:
+As task management logically is a group of commands it is better to add them to the `task` package:
 
-```bash
+```console
 $ tree
 .
 └── TODO
@@ -48,11 +48,11 @@ optional arguments:
 
 **As you may notice the `_todos` package was ignored as it is considered as "non-public" - pure Python convention.**
 
-So, the DynaCLI does not interfere any already existing code base.
+So, the DynaCLI does not interfere with any already existing codebase.
 
-To implement the task adding, we need to create `add.py` file:
+To implement the task adding, we need to create the `add.py` file:
 
-```bash
+```console
 tree
 .
 └── TODO
@@ -73,7 +73,7 @@ tree
 
 Here we use as a reference [Implement the add CLI Command](https://realpython.com/python-typer-cli/#implement-the-add-cli-command).
 
-And of course define the add function in the `add.py`:
+And of course, define the add function in the `add.py`:
 
 ```py title="add.py"
 from _todos import todo
@@ -81,7 +81,7 @@ from _todos import todo
 
 def add(project_name: str, task: str, *tasks: str) -> None:
     """
-    Add task to the project
+    Add a task to the project
 
     Args:
         project_name (str): the project name
@@ -171,4 +171,4 @@ If you check the `daily.json`: `{"daily": [["Todo", "morning walk"], ["Todo", "n
 
 If you have already noticed every task is by default marked as `"Todo"`.
 
-The next topic is to add `todo task list` command.
+The next topic is to add the `todo task list` command.

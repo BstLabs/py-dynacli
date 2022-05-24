@@ -1,9 +1,10 @@
 # todo remove command
 
 Again, removing project(database) means removing our .json file.
-The most naive way is to create `remove.py` file and pass the project name as argument:
+The most naive way is to create the `remove.py` file and pass the project name as an argument:
 
-```bash
+```console
+$ touch remove.py
 $ tree
 .
 └── TODO
@@ -19,7 +20,7 @@ import os
 
 def remove(project_name: str) -> None:
     """
-    Remove the .json file with given project name
+    Remove the .json file with a given project name
 
     Args:
         project_name (str): The name of the project
