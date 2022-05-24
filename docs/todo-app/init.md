@@ -1,14 +1,16 @@
 # todo init command
 
 The simplest way of storing our todos is constructing a .json file with given name.
-At this point it is different from [original post](https://realpython.com/python-typer-cli/), 
-and we consider it is simpler to store tasks as: `(Status, Task name)` style in `.json` file.
+At this point, it is different from [original post](https://realpython.com/python-typer-cli/), 
+and we consider it is simpler to store tasks as: `(Status, Task name)` style in the `.json` file.
 We consider the database as a project name where the tasks should reside.
-If you want to create a task management for your daily routine - that means, we need to init the daily database(or daily project).
+If you want to create task management for your daily routine - that means, we need to init the daily database(or daily project).
 
-This is called initialization, so we have created `init.py` file:
+This is called initialization, so we have created the `init.py` file:
 
-```bash
+```console
+$ cd TODO
+$ touch init.py
 $ tree
 .
 └── TODO
@@ -23,7 +25,7 @@ import json
 
 def init(project_name: str) -> None:
     """
-    Initialize the .json file with given name
+    Initialize the .json file with a given name
 
     Args:
         project_name (str): the name of the todo project
@@ -36,7 +38,7 @@ def init(project_name: str) -> None:
     print("Created: ", project_name+".json")
 ```
 
-That is it now we have nice help message, and we can initialize our "database" json file:
+That is it now we have a nice help message, and we can initialize our "database" - JSON file:
 
 ```console
 $ ./todo init -h
@@ -68,4 +70,4 @@ $ tree -I __pycache__
 0 directories, 3 files
 ```
 
-The next command is to implement `todo remove` command - I.E deleting .json file.
+The next command is to implement the `todo remove` command - I.E deleting the ".json" file.

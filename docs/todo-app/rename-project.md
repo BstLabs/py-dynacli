@@ -1,8 +1,9 @@
 # todo rename command
 
-For renaming our project(database) we need old name and new name as function arguments to our `rename.py`.
+For renaming our project(database) we need the old name and a new name as function arguments to our `rename.py`.
 
-```bash
+```console
+$ touch rename.py
 $ tree
 .
 └── TODO
@@ -22,8 +23,8 @@ def rename(old_name: str, new_name: str) -> None:
     Rename the project name
 
     Args:
-        old_name (str): old name of project
-        new_name (str): new name of project
+        old_name (str): old name of the project
+        new_name (str): new name of the project
     
     Return: None
     """
@@ -38,8 +39,8 @@ $ ./todo rename -h
 usage: todo rename [-h] old_name new_name
 
 positional arguments:
-  old_name    old name of project
-  new_name    new name of project
+  old_name    old name of the project
+  new_name    new name of the project
 
 optional arguments:
   -h, --help  show this help message and exit
