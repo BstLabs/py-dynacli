@@ -1,0 +1,19 @@
+@startuml
+state _waiting_for_all <<choice>>
+
+[*] --> _initial_state
+_initial_state --> _waiting_for_feature_or_command
+_waiting_for_feature_or_command --> _waiting_for_all : [~__all~__ in module.~__dict~__]
+_waiting_for_feature_or_command --> _waiting_for_feature_or_command : [_is_package]/add_feature()
+_waiting_for_feature_or_command --> _waiting_for_feature_module_command : [_is_feature_module]/add_feature_parser()
+_waiting_for_feature_or_command --> [*] : /add_command_parser()
+_waiting_for_feature_or_command --> [*] : [StopIteration]/build_all_features_help()
+_waiting_for_all --> _waiting_for_package_feature_all : [_is_package]/add_feature()
+_waiting_for_all --> _waiting_for_module_feature_all : [else]/add_feature_parser()
+_waiting_for_package_feature_all --> [*] : [name in module.~__all~__]/add_command_parser()
+_waiting_for_package_feature_all --> [*] : [StopIteration]/build_features_help_with_all()
+_waiting_for_module_feature_all --> [*] : [name in module.~__all~__]/add_command_parser()
+_waiting_for_module_feature_all --> [*] : [StopIteration]/add_command_parser()
+_waiting_for_feature_module_command --> [*] : /add_command_parser()
+_waiting_for_feature_module_command --> [*] : [StopIteration]/build_feature_module_help()
+@enduml
