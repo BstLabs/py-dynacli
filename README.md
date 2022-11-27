@@ -1,4 +1,7 @@
 # DynaCLI
+[![Downloads](https://static.pepy.tech/personalized-badge/dynacli?period=total&units=none&left_color=blue&right_color=orange&left_text=Downloads)](https://pepy.tech/project/dynacli)
+[![](https://img.shields.io/pypi/v/dynacli?label=PyPi)](https://pypi.org/project/dynacli/)
+[![](https://img.shields.io/github/license/BstLabs/py-dynacli?color=blue&label=License)](https://github.com/BstLabs/py-dynacli/blob/main/LICENSE.md)
 
 DynaCLI (Dynamic CLI) is a cloud-friendly Python library for converting pure Python functions into Linux Shell commands on the fly.
 
