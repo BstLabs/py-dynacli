@@ -550,8 +550,8 @@ class _ArgParsingContext:
     def add_feature(self, name: str, module: ModuleType) -> None:
         self.add_feature_parser(_get_cli_name(name), module)
         self._current_package = module
-        f_name = module.__file__ or ""
-        self._search_path = [p for p in self._search_path if f_name.startswith(p)]
+        #f_name = module.__file__ or ""
+        #self._search_path = [p for p in self._search_path if f_name.startswith(p)]
 
     def add_command_parser(self, name: str, module: ModuleType) -> None:
         command = module.__dict__[name]
@@ -619,7 +619,7 @@ class _ArgParsingContext:
         :param param_docs: arguments dictionary with help messages
         :return: parser object
         """
-        parser = self._current_subparsers.add_parser(name, help=description)
+        parser = self._current_subparsers.add_parser(name, description=description)
         sig_ = signature(command)
         self._current_command = command
         nargs = None
