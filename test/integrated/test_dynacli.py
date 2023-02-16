@@ -35,6 +35,8 @@ def _get_expected(file_path: str) -> Union[Tuple[str, None], Tuple[str, str]]:
 
 
 class TestDynaCLI(TestCase):
+    """Runs suite tests of DynaCLI"""
+
     def setUp(self):
         cwd = path.dirname(__file__)
         environ["PATH"] = f'{environ["PATH"]}:{cwd}'
