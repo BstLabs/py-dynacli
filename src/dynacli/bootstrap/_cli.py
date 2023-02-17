@@ -18,7 +18,7 @@ sys.path.extend(search_path)
 # This fix is for dynacli entrypoint script; as it has wrapper __main__ we need to add necessary information
 
 _map = {
-    "__version__": "1.0.8",
+    "__version__": "1.0.9b0",
     "__doc__": """
 DynaCLI bootstrap script
 """,
