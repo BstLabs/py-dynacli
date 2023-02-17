@@ -1,4 +1,0 @@
----
-usage: testcli upload [-h] [-v] {shutdown} ...
-testcli upload: error: invalid choice: 'new' (choose from 'shutdown')
----
