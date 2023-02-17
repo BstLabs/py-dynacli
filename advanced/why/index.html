@@ -1,0 +1,776 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="DynaCLI, turn your Python packages, modules into modular CLI app. Based on Python type hints.">
+      
+      
+      
+      
+        <link rel="prev" href="../../manual/module-as-feature/">
+      
+      
+        <link rel="next" href="../types/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.0.12">
+    
+    
+      
+        <title>Why DynaCLI? - DynaCLI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0d440cfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-blue" data-md-color-accent="indigo">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dynacli-vs-alternatives" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="DynaCLI" class="md-header__button md-logo" aria-label="DynaCLI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            DynaCLI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Why DynaCLI?
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="DynaCLI" class="md-nav__button md-logo" aria-label="DynaCLI" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    DynaCLI
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        DynaCLI
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../types/" class="md-nav__link">
+        Python Types Intro
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Tutorial - TODO app
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial - TODO app
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/" class="md-nav__link">
+        TODO - Intro
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/init/" class="md-nav__link">
+        Init the database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/remove-project/" class="md-nav__link">
+        Remove the database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/rename-project/" class="md-nav__link">
+        Rename the database
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+          Task management
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_5">
+          <span class="md-nav__icon md-icon"></span>
+          Task management
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/task/todo-app-database-handler/" class="md-nav__link">
+        Setup TODO app database handler
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/task/todo-controller-class/" class="md-nav__link">
+        Setup TODO app todo controller class
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/task/task-add/" class="md-nav__link">
+        Add the tasks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/task/task-list/" class="md-nav__link">
+        List the tasks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/task/task-delete/" class="md-nav__link">
+        Delete single task
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/task/task-clear/" class="md-nav__link">
+        Clear all tasks
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../todo-app/task/task-done/" class="md-nav__link">
+        Set done the task
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Reference Manual
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Reference Manual
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/" class="md-nav__link">
+        DynaCLI installation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/cli-entrypoint/" class="md-nav__link">
+        CLI entrypoint
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/top-level-command/" class="md-nav__link">
+        Top level command
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/package-as-feature/" class="md-nav__link">
+        Package as feature
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../manual/module-as-feature/" class="md-nav__link">
+        Module as feature
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Advanced Reference Manual
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Advanced Reference Manual
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Why DynaCLI?
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../types/" class="md-nav__link">
+        Supported types
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../docstrings/" class="md-nav__link">
+        Docstring formats
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../search-path/" class="md-nav__link">
+        Search Path manipulation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../state-machine/" class="md-nav__link">
+        State Machine
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="dynacli-vs-alternatives">DynaCLI vs. Alternatives</h1>
+<p>There are so many libraries out there for writing command-line utilities; why choose DynaCLI?</p>
+<p>Let's take a brief look at some common Python CLI libraries:</p>
+<ul>
+<li><a href="https://docs.python.org/3/library/argparse.html">Python argparse</a></li>
+<li><a href="https://google.github.io/python-fire/">Google python-fire</a></li>
+<li><a href="https://typer.tiangolo.com/">Tiangolo Typer</a></li>
+<li><a href="https://click.palletsprojects.com/en/8.0.x/">Pallet's Click</a></li>
+</ul>
+<p>We'll review them one by one trying to understand the benefits and limitations of each:</p>
+<h2 id="python-argparse"><a href="https://docs.python.org/3/library/argparse.html">Python argparse</a></h2>
+<p>DynaCLI is <a href="../how_dynacli_works/">built on top</a> of <a href="https://docs.python.org/3/library/argparse.html">argparse</a> but the latter by itself is insufficient: it requires the manual construction of every parser. While this approach provides maximum flexibility, it's also tedious and error-prone. Also, typical usage of <a href="https://docs.python.org/3/library/argparse.html">argparse</a> assumes building all parsers and sub-parsers upfront. The irony is that each CLI invocation will execute only one command, so all other CPU cycles are wasted. When the number of commands is large, it starts to be a serious problem exacerbated by the fact that, in the case of <a href="http://caios.io">Cloud AI Operating System (CAIOS)</a>, all command function modules come from cloud storage. Having said all this, <a href="https://docs.python.org/3/library/argparse.html">argparse</a> establishes an industry-wide standard of how CLI help and usage messages should look, and DynaCLI uses it internally as explained in more details <a href="../how_dynacli_works/">here</a>.</p>
+<h2 id="google-python-fire"><a href="https://google.github.io/python-fire/">Google python-fire</a></h2>
+<p>This library shares with DynaCLI the main approach of converting ordinary Python functions into Bash commands. It even goes further, supporting class methods. DynaCLI does not support classes at the moment, but we may consider supporting them in the future (there is nothing spectacularly complex about classes). <a href="https://google.github.io/python-fire/">Google python-fire</a> provides some additional attractive features such as function call chaining, interactivity, and shell completion. Like DynaCLI, <a href="https://google.github.io/python-fire/">Google python-fire</a> is built on top of <a href="https://docs.python.org/3/library/argparse.html">Python argparse</a> and uses its internal machinery for configuring parsers and help and usage messages.</p>
+<p><a href="https://google.github.io/python-fire/">Google python-fire</a> also supports custom serialization, keyword arguments (with -- prefix), and direct access to object properties and local variables.</p>
+<p><a href="https://google.github.io/python-fire/">Google python-fire</a> does not rely on type annotations but rather converts command-line arguments to the most suitable types automatically on the fly.</p>
+<p>However, unlike DynaCLI, <a href="https://google.github.io/python-fire/">Google python-fire</a> is not <em>open</em> concerning the potential number of commands and command groups (we call them features). Specifically, the main module should <code>import fire</code> (similar to <code>from dynacli import main</code>), but it also assumes either defining in place or importing ALL functions and classes one wants to convert into Bash commands. DynaCLI does not do this; instead, it relies on the search path and root package configurations, based on which any number of Python functions will be converted into commands automatically. While DynaCLI does not support classes at the moment (we simply did not see enough need for them), it does support unlimited nesting of command groups (feature packages) as well as a correct interpretation of <code>__all__</code> specification and package <code>__init__.py</code> imports.</p>
+<p>As the result, the <a href="https://google.github.io/python-fire/">Google python-fire</a> library is relatively large: i.e., 10s of Python modules. In comparison, DynaCLI comprises one Python module with less than 700 lines, including blanks and docstrings. Library size and several features mean complexity and stability, and we were looking for something as small as possible... we seldom, if at all, will need to update.</p>
+<p>The main difference between DynaCLI and <a href="https://google.github.io/python-fire/">Google python-fire</a> is that it was built with a distinct strategic goal in mind: to provide a minimal footprint for a completely extensible set of administrative commands coming from vendors and customers alike.</p>
+<p>Many extra features of <a href="https://google.github.io/python-fire/">Google python-fire</a> that are missing in DynaCLI could be added as dynamic plugins if we decide to support them. Custom serialization would be a good example. We deliberately decided not to support them at this time, arguing that it would increase complexity without too much benefit: custom conversions of string arguments could be easily implemented at the command function level without the introduction of a parallel plugin structure. Following similar logic, we decided not to support named and optional arguments. We preferred treating command functions as belonging to the <a href="https://martinfowler.com/eaaCatalog/serviceLayer.html">service layer</a>, restricted to built-in type arguments with basic support for variable-length parameters via <code>*args</code> and <code>**kwargs</code>. Anything else could be implemented on top of that basic machinery without introducing added complexity and inflating the library's footprint.</p>
+<p>We will continue learning about <a href="https://google.github.io/python-fire/">Google python-fire</a> and keeping track of its evolution. We will probably incorporate the most useful of its features into DynaCLI.</p>
+<h2 id="tiangolo-typer"><a href="https://typer.tiangolo.com/">Tiangolo Typer</a></h2>
+<p>Conceptually, <a href="https://typer.tiangolo.com/">Tiangolo Typer</a> usage is similar to that of <a href="https://google.github.io/python-fire/">Google python-fire</a> - it converts plain Python functions into commands. Unlike <a href="https://google.github.io/python-fire/">Google python-fire</a> and similar to DynaCLI, it does rely on argument types annotation. Unlike both of them, it is not implemented directly on top of <a href="https://docs.python.org/3/library/argparse.html">Python argparse</a>, but rather on top of <a href="https://click.palletsprojects.com/en/8.0.x/">Pallet's Click</a>, which of course, inflates the overall library footprint, which we were trying to avoid in DynaCLI.</p>
+<p>Like DynaCLI, it generates automatically commands' help from function docstrings and type annotations.</p>
+<p>Feature-wise, <a href="https://typer.tiangolo.com/">Tiangolo Typer</a> is very close to <a href="https://google.github.io/python-fire/">Google python-fire</a>, but it leverages type annotations whenever possible. That in turn, allows effective integration with IDEs.</p>
+<p>It also uses <a href="https://pypi.org/project/colorama/">colorama</a> for controlling output colors. For that purpose, <a href="https://typer.tiangolo.com/">Tiangolo Typer</a> recommends using its special <a href="https://typer.tiangolo.com/tutorial/printing/"><code>echo()</code></a> function. In DynaCLI, we decided not to pursue this direction at the moment, permitting every command function to print or log whatever it needs. As with many other command-line tools, we want to be able to develop service functions equally utilizable via CLI and REST API interfaces. For that reason, using <a href="https://docs.python.org/3/howto/logging.html">Python Logging</a> infrastructure is very often preferable. We also considered automatic printing (or logging) of function return values to be included in a future version. As with many other features, we want to avoid increasing the library footprint through features most daily operations could easily be performed without.</p>
+<p>Interestingly enough, <a href="https://typer.tiangolo.com/">Tiangolo Typer</a> documentation <a href="https://typer.tiangolo.com/alternatives/">mentions</a> two other CLI Python frameworks: <a href="https://www.hug.rest/">Hug</a> and <a href="https://plac.readthedocs.io/en/latest/">Plac</a>. They both are based on Python function decorators and conceptually are similar to <a href="https://click.palletsprojects.com/en/8.0.x/">Pallet's Click</a>.</p>
+<p>The main limitation of <a href="https://typer.tiangolo.com/">Tiangolo Typer</a> is the same as with <a href="https://google.github.io/python-fire/">Google python-fire</a> - ALL command functions have to be brought in (aka imported) upfront, which violates the basic DynaCLI premise to be a completely <em>open</em> and cloud-friendly library with a minimal installed footprint. By no means we were willing to trade these properties for more features and flexibility; more often than not these enhancements are not that critical or worth the extra complexity.</p>
+<h2 id="pallets-click"><a href="https://click.palletsprojects.com/en/8.0.x/">Pallet's Click</a></h2>
+<p>This is probably the most widely used and powerful Python CLI library. It does not seem to be implemented on top of <a href="https://docs.python.org/3/library/argparse.html">argparse</a>, but rather on top of <a href="https://docs.python.org/3/library/optparse.html">optparse</a> - the <a href="https://docs.python.org/3/library/argparse.html">argparse</a> predecessor, which was deprecated since Python version 3.2 and has not been further developed.</p>
+<p>It has a relatively large footprint by itself (this needs to be taken into consideration for <a href="https://typer.tiangolo.com/">Tiangolo Typer</a>).</p>
+<p>The main feature of <a href="https://click.palletsprojects.com/en/8.0.x/">Pallet's Click</a>, which makes it so powerful and flexible, was an absolute no-go for us - it is based on <a href="https://www.python.org/dev/peps/pep-0318/">Python function decorators</a>. DynaCLI from the very outset was intended for converting into Bash commands regular Python functions that, at least in principle, could be reused in other contexts, such as REST API Services.</p>
+<h2 id="summary">Summary</h2>
+<p>All the libraries mentioned above do not properly address the main DynaCLI requirements:</p>
+<ul>
+<li><strong>complete openness</strong> - all command functions are brought in via dynamic imports from, presumably, cloud storage.</li>
+<li><strong>no function decorators</strong> - command functions could be, at least in principle, reused in other contexts.</li>
+<li><strong>minimal footprint</strong> - the core library has to be as small and as stable as possible, built on top of the standard Python library. All extra features, if any, should be introduced via dynamic imports.</li>
+</ul>
+<p>At the moment, the DynaCLI library satisfies all requirements of the sponsoring <a href="http://caios.io">Cloud AI Operating System (CAIOS)</a> project. Should additional needs or high-demand enhancements arise, such as command chaining or autocompletion, and these could be added without violating the main requirements outlined above, we will consider doing so in or accepting contributions to future versions of DynaCLI.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate"], "search": "../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.4b2c34cd.min.js"></script>
+      
+    
+  </body>
+</html>
