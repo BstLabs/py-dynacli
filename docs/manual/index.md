@@ -13,8 +13,8 @@ So you can come back and see exactly what you need.
 
 ## Install DynaCLI
 
-```bash
+```console
 $ pip3 install dynacli
 ```
 
-As we have zero 3rd party dependencies, DynaCLI will just install single module and that's it.
+As we have zero 3rd party dependencies, DynaCLI will just install a single module and that's it.

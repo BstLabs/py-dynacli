@@ -1,7 +1,7 @@
 # Top Level Command
 
-Top level command is a module with identical named function in it. It is similar to package as a feature, except it is a module not package.
-I.E it is a module as feature with identical named function in it.
+The top-level command is a module with an identically named function in it. It is similar to a package as a feature, except it is a module, not a package.
+I.E it is a module as a feature with an identically named function in it.
 
 Let's create sample one:
 
@@ -14,7 +14,7 @@ Define the command as:
 ```py title="destroy.py"
 def destroy(name: str) -> None:
     """
-    Destroy given name...(top level command)
+    Destroy given name...(top-level command)
 
     Args:
 
@@ -27,13 +27,13 @@ def destroy(name: str) -> None:
 
 Get the help message:
 
-```bash
+```console
 $ ./awesome -h
 usage: awesome [-h] {destroy,service,upload,environment} ...
 
 positional arguments:
   {destroy,service,upload,environment}
-    destroy             Destroy given name...(top level command) # (1)
+    destroy             Destroy given name...(top-level command) # (1)
     service             The service feature to handle our services # (2)
     upload              This is an example of module feature # (3)
     environment         The environment feature to handle our environments # (4)
@@ -42,12 +42,12 @@ optional arguments:
   -h, --help            show this help message and exit
 ```
 
-1. Top level command from storage_X
-2. Package as feature from storage_X
-3. Module as feature from storage_X
-4. Package as feature from storage_Y
+1. Top-level command from storage_X
+2. Package as a feature from storage_X
+3. Module as a feature from storage_X
+4. Package as a feature from storage_Y
 
-Get the top level command help:
+Get the top-level command help:
 
 ```console
 $ ./awesome destroy -h
@@ -60,11 +60,11 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-Run the top level command:
+Run the top-level command:
 
 ```console
 $ ./awesome destroy please
-This is a top level destroyer - please
+This is a top-level destroyer - please
 ```
 
 ## Versioning

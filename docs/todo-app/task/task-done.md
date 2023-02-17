@@ -1,9 +1,9 @@
 # todo task complete command
 
-As described in original blog post: [Step 6](https://realpython.com/python-typer-cli/#step-6-code-the-to-do-completion-functionality)
-we need to add complete command to mark the task as done by given ID.
+As described in the original blog post ([Step 6](https://realpython.com/python-typer-cli/#step-6-code-the-to-do-completion-functionality))
+we need to add complete command to mark the task as done by the given ID.
 
-First we need to update Todoer controller:
+First, we need to update the Todoer controller:
 
 ```py title="_todos/todo.py"
 
@@ -28,9 +28,9 @@ class Todoer:
     ...
 ```
 
-The next thing is to create `complete.py` file in the `task` package:
+The next thing is to create the `complete.py` file in the `task` package:
 
-```bash
+```console
 $ tree
 .
 └── TODO
@@ -88,7 +88,7 @@ positional arguments:
     add                 Add task to the project
     complete            Set to done given task. Mark as complete.
     delete              Delete given task from the project
-    list                Show all tasks in given project
+    list                Show all tasks in the given project
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -121,6 +121,6 @@ ID. Is Done | Description
 
 As you have already noticed, the status has been changed from "X" to ">" marking it as a Done.
 
-In raw, `daily.json` file it is updated as well:
+In raw `daily.json` file it is updated as well:
 
 `{"daily": [["Done", "morning walk"], ["Todo", "night walk"], ["Todo", "gym"], ["Todo", "eat vegetables"]]}`

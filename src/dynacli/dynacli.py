@@ -49,8 +49,8 @@ class ArgProps(TypedDict):
     dest: str
     nargs: Optional[Union[int, str]]
     choices: Optional[List[str]]
-    type: Union[type, callable]
-    action: Union[str, callable]
+    type: Union[type, Callable]
+    action: Union[str, Callable]
 
 
 def _choices_patch():
@@ -84,7 +84,7 @@ def _get_feature_help(module: object) -> str:
     return module.__doc__ or "[ERROR] Missing the module docstring"
 
 
-def _parse_command_doc(command: callable) -> Tuple[str, Optional[str]]:
+def _parse_command_doc(command: Callable) -> Tuple[str, Optional[str]]:
     """
     The function for parsing function docstring
     :param command: the actual function object
@@ -96,7 +96,7 @@ def _parse_command_doc(command: callable) -> Tuple[str, Optional[str]]:
     return description, spec
 
 
-def _get_command_description(command: callable) -> str:
+def _get_command_description(command: Callable) -> str:
     description, _ = _parse_command_doc(command)
     return description
 
@@ -160,7 +160,7 @@ def _get_module_help(name: str, module: ModuleType) -> str:
     )
 
 
-def _execute_command(args: Dict[str, Any], func_: callable) -> None:
+def _execute_command(args: Dict[str, Any], func_: Callable) -> None:
     """
     Here we are running actual function with positional arguments.
     If the function signature has **kwargs we will get keyword arguments
@@ -174,7 +174,7 @@ def _execute_command(args: Dict[str, Any], func_: callable) -> None:
     func_(*pos_values_, **kwargs_) if kwargs_ else func_(*pos_values_)
 
 
-def _process_type(type_: type) -> Tuple[Union[type, callable], ChoicesType]:
+def _process_type(type_: type) -> Tuple[Union[type, Callable], ChoicesType]:
     """
     Function for processing int, str, float, bool and Enum type.
     Currently, we are supporting only these types.
@@ -266,7 +266,7 @@ def _get_regular_arg_props(
     )
 
 
-_PARAM_KIND_MAP: Final[Dict[str, callable]] = {
+_PARAM_KIND_MAP: Final[Dict[str, Callable]] = {
     "VAR_POSITIONAL": partial(
         _get_regular_arg_props, nargs="*", action="extend", dest="pos_args"
     ),
@@ -550,8 +550,8 @@ class _ArgParsingContext:
     def add_feature(self, name: str, module: ModuleType) -> None:
         self.add_feature_parser(_get_cli_name(name), module)
         self._current_package = module
-        f_name = module.__file__ or ""
-        self._search_path = [p for p in self._search_path if f_name.startswith(p)]
+        # f_name = module.__file__ or ""
+        # self._search_path = [p for p in self._search_path if f_name.startswith(p)]
 
     def add_command_parser(self, name: str, module: ModuleType) -> None:
         command = module.__dict__[name]
@@ -604,7 +604,7 @@ class _ArgParsingContext:
 
     def _build_command_executor(
         self,
-        command: callable,
+        command: Callable,
         name: str,
         description: str,
         param_docs: Optional[Dict[str, str]],
@@ -619,7 +619,7 @@ class _ArgParsingContext:
         :param param_docs: arguments dictionary with help messages
         :return: parser object
         """
-        parser = self._current_subparsers.add_parser(name, help=description)
+        parser = self._current_subparsers.add_parser(name, description=description)
         sig_ = signature(command)
         self._current_command = command
         nargs = None
@@ -777,4 +777,4 @@ def main(
     context.execute()
 
 
-__all__: Final[List[callable]] = ["main"]
+__all__: Final[List[Callable]] = ["main"]

@@ -1,6 +1,6 @@
 # Supported Python Types
 
-Currently, we support following Python types as argument types in functions:
+Currently, we support the following Python types as argument types in functions:
 
 Supported: `int`, `float`, `str`, `bool`, `Enum`
 

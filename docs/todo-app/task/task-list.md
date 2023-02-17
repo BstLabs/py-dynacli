@@ -6,7 +6,7 @@ We have changed the implementation described here: [Implement the list Command](
 
 Create `list.py` file:
 
-```bash
+```console
 $ tree
 .
 └── TODO
@@ -35,7 +35,7 @@ from _todos import todo
 
 def list(project_name: str) -> None:
     """
-    Show all tasks in given project
+    Show all tasks in the given project
 
     Args:
         project_name (str): the project name
@@ -55,7 +55,7 @@ def _format_output(stdout: list[list[str, any]]) -> None:
         print(id_, status, t[1])
 ```
 
-Now, we need to add `get_todo_list()` method to the Todoer class:
+Now, we need to add the `get_todo_list()` method to the Todoer class:
 
 ```py title="_todos/todo.py" hl_lines="7"
 
@@ -102,7 +102,7 @@ ID. Is Done | Description
 5 X eat fruits
 ```
 
-How about to add separate versions to our commands? It is possible to have different commands from various resources, and they can have different versioning.
+How about adding separate versions to our commands? It is possible to have different commands from various resources, and they can have different versioning.
 It is easy to implement it with DynaCLI, just add `__version__` to the `list.py` file:
 
 ```py title="list.py" hl_lines="6"
